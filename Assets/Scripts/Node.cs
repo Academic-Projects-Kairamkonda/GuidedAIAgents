@@ -14,7 +14,6 @@ public class Node
     /// </summary>
     public Vector3 worldPosition;
 
-
     /// <summary>
     /// constructor of the class
     /// </summary>
