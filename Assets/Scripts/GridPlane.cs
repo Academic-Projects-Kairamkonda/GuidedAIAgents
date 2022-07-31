@@ -2,19 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// Handles the grid generation with nodes
+/// </summary>
 public class GridPlane : MonoBehaviour
 {
     //public Transform player;
 
+    /// <summary>
+    /// LayerMask for unwalkable area
+    /// </summary>
     public LayerMask unwalkableMask;
 
+    /// <summary>
+    /// World size of player
+    /// </summary>
     public Vector2 gridWorldSize;
 
+    /// <summary>
+    /// Node radius of each gird;s
+    /// </summary>
     public float nodeRadius;
 
+    /// <summary>
+    /// Grid node holds data of a current grid
+    /// </summary>
     Node[,] grid;
 
+    /// <summary>
+    /// Diameter of the node
+    /// </summary>
     float nodeDiameter;
+
+    /// <summary>
+    /// 
+    /// </summary>
     int gridSizeX, gridSizeY;
 
     void Start()
@@ -26,6 +49,9 @@ public class GridPlane : MonoBehaviour
         CreateGrid();
     }
 
+    /// <summary>
+    /// Creates the grid of world point co ordinates
+    /// </summary>
     void CreateGrid()
     {
         grid = new Node[gridSizeX, gridSizeY];
@@ -43,6 +69,11 @@ public class GridPlane : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Get the currrent node coordinates of the target object
+    /// </summary>
+    /// <param name="worldPosition">target position</param>
+    /// <returns></returns>
     public Node NodeFromWorldPoint(Vector3 worldPosition)
     {
         float percentX = (worldPosition.x + gridWorldSize.x / 2) / gridWorldSize.x;
@@ -57,6 +88,9 @@ public class GridPlane : MonoBehaviour
         return grid[x, y];
     }
 
+    /// <summary>
+    /// Draws Runtime nodes of the grid
+    /// </summary>
     void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
