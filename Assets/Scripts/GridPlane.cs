@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 /// <summary>
 /// Handles the grid generation with nodes
 /// </summary>
 public class GridPlane : MonoBehaviour
 {
-    //public Transform player;
+    /* Update the player position on the grid
+      public Transform player;
+     */
 
     /// <summary>
     /// LayerMask for unwalkable area
@@ -36,9 +37,14 @@ public class GridPlane : MonoBehaviour
     float nodeDiameter;
 
     /// <summary>
-    /// 
+    /// grid of the plane x axis
     /// </summary>
-    int gridSizeX, gridSizeY;
+    int gridSizeX;
+
+    /// <summary>
+    /// grid of the plane y axis
+    /// </summary>
+    int  gridSizeY;
 
     void Start()
     {
@@ -69,6 +75,11 @@ public class GridPlane : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Neighbours data
+    /// </summary>
+    /// <param name="node"></param>
+    /// <returns></returns>
     public List<Node> GetNeighbours(Node node)
     {
         List<Node> neighbours = new List<Node>();
@@ -112,9 +123,11 @@ public class GridPlane : MonoBehaviour
         return grid[x, y];
     }
 
+    /// <summary>
+    /// path calculates from seeker to target
+    /// </summary>
     public List<Node> path;
    
-
     /// <summary>
     /// Draws Runtime nodes of the grid
     /// </summary>

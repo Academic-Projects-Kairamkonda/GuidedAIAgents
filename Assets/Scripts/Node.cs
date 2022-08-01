@@ -17,13 +17,28 @@ public class Node
     /// </summary>
     public Vector3 worldPosition;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public int gridX;
+    /// <summary>
+    /// 
+    /// </summary>
     public int gridY;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public int gCost;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public int hCost;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public Node parent;
 
     /// <summary>
@@ -39,6 +54,9 @@ public class Node
         gridY = _gridY;
     }
 
+    /// <summary>
+    /// Sum of the value of gCost and hcost
+    /// </summary>
     public int fCost
     {
         get

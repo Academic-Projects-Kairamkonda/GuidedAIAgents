@@ -2,12 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// Calculates the path form seeker to target
+/// </summary>
 public class PathFinding : MonoBehaviour
 {
+    /// <summary>
+    /// Grid plane positions
+    /// </summary>
     GridPlane gridPlane;
 
+    /// <summary>
+    /// Seekes target for path
+    /// </summary>
     public Transform seeker;
+
+    /// <summary>
+    /// target for seeker to calculate path
+    /// </summary>
     public Transform target;
+
+    #region Unity Methods
 
     void Awake()
     {
@@ -19,7 +35,13 @@ public class PathFinding : MonoBehaviour
         FindPath(seeker.position, target.position);
     }
 
+    #endregion Unity Methods
 
+    /// <summary>
+    /// Calculates the route to target position
+    /// </summary>
+    /// <param name="startPos">start position</param>
+    /// <param name="targetPos">end position</param>
     void FindPath(Vector3 startPos, Vector3 targetPos)
     {
         Node startNode = gridPlane.NodeFromWorldPoint(startPos);
@@ -77,6 +99,11 @@ public class PathFinding : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Add the path to the parent 
+    /// </summary>
+    /// <param name="startNode">start position</param>
+    /// <param name="endNode">end position</param>
     void RetracePath(Node startNode, Node endNode)
     {
         List<Node> path = new List<Node>();
@@ -92,6 +119,12 @@ public class PathFinding : MonoBehaviour
         gridPlane.path = path;
     }
 
+    /// <summary>
+    /// Gets the distance from one to another point
+    /// </summary>
+    /// <param name="nodeA">seeker</param>
+    /// <param name="nodeB">target</param>
+    /// <returns></returns>
     int GetDistance(Node nodeA, Node nodeB)
     {
         int distX = Mathf.Abs(nodeA.gridX - nodeB.gridX);
@@ -104,6 +137,4 @@ public class PathFinding : MonoBehaviour
 
         return 14 * distY + 10 * (distY - distX);
     }
-
-        
 }
