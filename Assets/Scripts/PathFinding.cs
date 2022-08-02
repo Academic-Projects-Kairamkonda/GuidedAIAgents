@@ -140,7 +140,7 @@ public class PathFinding : MonoBehaviour
     int GetDistance(Node nodeA, Node nodeB)
     {
         int distX = Mathf.Abs(nodeA.gridX - nodeB.gridX);
-        int distY = Mathf.Abs(nodeB.gridY - nodeB.gridY);
+        int distY = Mathf.Abs(nodeA.gridY - nodeB.gridY);
 
         if (distX>distY)
         {

@@ -157,29 +157,32 @@ public class GridPlane : MonoBehaviour
             }
         }
 
-        if (grid!=null)
-        {
-            //Node playerNode = NodeFromWorldPoint(player.position);
-
-            foreach (Node n in grid)
+		else
+		{
+            if (grid!=null)
             {
-                Gizmos.color = (n.walkable) ? Color.white : Color.red;
+                //Node playerNode = NodeFromWorldPoint(player.position);
 
-                /*Checking the player current position on the Node
-                if(playerNode==n)
-                    Gizmos.color = Color.cyan;
-                */
-
-                if (path!=null)
+                foreach (Node n in grid)
                 {
-                    if (path.Contains(n))
-                    {
-                        Gizmos.color = Color.black;
-                    }
-                }
+                    Gizmos.color = (n.walkable) ? Color.white : Color.red;
 
-                Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
-            }
+                    /*Checking the player current position on the Node
+                    if(playerNode==n)
+                        Gizmos.color = Color.cyan;
+                    */
+
+                    if (path!=null)
+                    {
+                        if (path.Contains(n))
+                        {
+                            Gizmos.color = Color.black;
+                        }
+                    }
+
+                    Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
+                }
+			}
         }
     }
 }
