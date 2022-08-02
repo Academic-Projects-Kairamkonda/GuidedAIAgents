@@ -9,12 +9,14 @@ public class GridPlane : MonoBehaviour
 {
     /* Update the player position on the grid
       public Transform player;
-     */
 
     /// <summary>
     /// bool to show only the path to target
     /// </summary>
     public bool onlyDisplayPathGizmos;
+     */
+
+    public bool displayGridGizmos;
 
     /// <summary>
     /// LayerMask for unwalkable area
@@ -53,7 +55,7 @@ public class GridPlane : MonoBehaviour
 
     #region Unity Methods
 
-    void Start()
+    void Awake()
     {
         nodeDiameter = nodeRadius * 2;
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
@@ -143,10 +145,12 @@ public class GridPlane : MonoBehaviour
         return grid[x, y];
     }
 
+    /*
     /// <summary>
     /// path calculates from seeker to target
     /// </summary>
     public List<Node> path;
+    */
    
     /// <summary>
     /// Draws Runtime nodes of the grid
@@ -155,6 +159,8 @@ public class GridPlane : MonoBehaviour
     {
         Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
 
+        #region Commented Code
+        /* path changed to way points
         if (onlyDisplayPathGizmos)
         {
             if (path!=null)
@@ -168,8 +174,11 @@ public class GridPlane : MonoBehaviour
         }
 
 		else
-		{
-            if (grid!=null)
+		{*/
+
+        #endregion Commented code
+
+        if (grid!=null && displayGridGizmos)
             {
                 //Node playerNode = NodeFromWorldPoint(player.position);
 
@@ -177,22 +186,25 @@ public class GridPlane : MonoBehaviour
                 {
                     Gizmos.color = (n.walkable) ? Color.white : Color.red;
 
-                    /*Checking the player current position on the Node
-                    if(playerNode==n)
-                        Gizmos.color = Color.cyan;
-                    */
+                    #region Commented Code
+                /*Checking the player current position on the Node
+                if(playerNode==n)
+                    Gizmos.color = Color.cyan;
 
-                    if (path!=null)
+                if (path!=null)
+                {
+                    if (path.Contains(n))
                     {
-                        if (path.Contains(n))
-                        {
-                            Gizmos.color = Color.black;
-                        }
+                        Gizmos.color = Color.black;
                     }
+                }
+                */
+
+                #endregion Commented Code
 
                     Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
                 }
 			}
-        }
+        //}
     }
 }

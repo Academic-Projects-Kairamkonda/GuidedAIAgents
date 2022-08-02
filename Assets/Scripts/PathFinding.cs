@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Diagnostics;
+using System;
 
 
 /// <summary>
@@ -14,6 +15,9 @@ public class PathFinding : MonoBehaviour
     /// </summary>
     GridPlane gridPlane;
 
+    PathRequestManager requestManager;
+
+    /* Path request Manager holds this data
     /// <summary>
     /// Seekes target for path
     /// </summary>
@@ -23,92 +27,121 @@ public class PathFinding : MonoBehaviour
     /// target for seeker to calculate path
     /// </summary>
     public Transform target;
+    */
 
     #region Unity Methods
 
     void Awake()
     {
         gridPlane = GetComponent<GridPlane>();
+        requestManager = GetComponent<PathRequestManager>();
     }
 
+    /* Removed because of adding the IEnumerator for FindPath()
     void Update()
     {
         if (Input.GetButtonDown("Jump"))
         FindPath(seeker.position, target.position);
     }
+    */
 
     #endregion Unity Methods
+
+    public void StartFindPath(Vector3 startPos, Vector3 targetPos)
+    {
+        StartCoroutine(FindPath(startPos, targetPos));
+    }
 
     /// <summary>
     /// Calculates the route to target position
     /// </summary>
     /// <param name="startPos">start position</param>
     /// <param name="targetPos">end position</param>
-    void FindPath(Vector3 startPos, Vector3 targetPos)
+    IEnumerator FindPath(Vector3 startPos, Vector3 targetPos)
     {
         Stopwatch sw = new Stopwatch();
         sw.Start();
 
+        Vector3[] wayPoints = new Vector3[0];
+        bool pathSucess = false;
+
+
         Node startNode = gridPlane.NodeFromWorldPoint(startPos);
         Node targetNode = gridPlane.NodeFromWorldPoint(targetPos);
 
-        Heap<Node> openSet = new Heap<Node>(gridPlane.MaxSize);
-        HashSet<Node> closedSet = new HashSet<Node>();
-
-        openSet.Add(startNode);
-
-        while(openSet.Count>0)
+        if (startNode.walkable && targetNode.walkable)
         {
-            /* This function derived 
-            Node currentNode = openSet[0];
-           
-            for (int i = 1; i < openSet.Count; i++)
+
+            Heap<Node> openSet = new Heap<Node>(gridPlane.MaxSize);
+            HashSet<Node> closedSet = new HashSet<Node>();
+
+            openSet.Add(startNode);
+
+            while (openSet.Count > 0)
             {
-                if (openSet[i].fCost<currentNode.fCost    ||
-                    openSet[i].fCost==currentNode.fCost &&
-                    openSet[i].hCost <currentNode.hCost)
+                #region Commented Code
+                /* This function derived 
+                Node currentNode = openSet[0];
+
+                for (int i = 1; i < openSet.Count; i++)
                 {
-                    currentNode = openSet[i];
-                }
-            }
-
-            openSet.Remove(currentNode);
-            */
-
-            Node currentNode = openSet.RemoveFirst();
-
-            closedSet.Add(currentNode);
-
-            if (currentNode==targetNode)
-            {
-                sw.Stop();
-                print($"Path Found: {sw.ElapsedMilliseconds} ms");
-                RetracePath(startNode, targetNode);
-                return;
-            }
-
-            foreach (Node neigbour in gridPlane.GetNeighbours(currentNode))
-            {
-                if (!neigbour.walkable || closedSet.Contains(neigbour))
-                {
-                    continue;
-                }
-
-                int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neigbour);
-
-                if(newMovementCostToNeighbour<neigbour.gCost || !openSet.Contains(neigbour))
-                {
-                    neigbour.gCost = newMovementCostToNeighbour;
-                    neigbour.hCost = GetDistance(neigbour, targetNode);
-                    neigbour.parent = currentNode;
-
-                    if (!openSet.Contains(neigbour))
+                    if (openSet[i].fCost<currentNode.fCost    ||
+                        openSet[i].fCost==currentNode.fCost &&
+                        openSet[i].hCost <currentNode.hCost)
                     {
-                        openSet.Add(neigbour);
+                        currentNode = openSet[i];
+                    }
+                }
+
+                openSet.Remove(currentNode);
+                */
+                #endregion Commented code
+
+                Node currentNode = openSet.RemoveFirst();
+
+                closedSet.Add(currentNode);
+
+                if (currentNode == targetNode)
+                {
+                    sw.Stop();
+                    print($"Path Found: {sw.ElapsedMilliseconds} ms");
+                    pathSucess = true;
+                    //RetracePath(startNode, targetNode);
+                    break;
+                }
+
+                foreach (Node neigbour in gridPlane.GetNeighbours(currentNode))
+                {
+                    if (!neigbour.walkable || closedSet.Contains(neigbour))
+                    {
+                        continue;
+                    }
+
+                    int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neigbour);
+
+                    if (newMovementCostToNeighbour < neigbour.gCost || !openSet.Contains(neigbour))
+                    {
+                        neigbour.gCost = newMovementCostToNeighbour;
+                        neigbour.hCost = GetDistance(neigbour, targetNode);
+                        neigbour.parent = currentNode;
+
+                        if (!openSet.Contains(neigbour))
+                        {
+                            openSet.Add(neigbour);
+						}
                     }
                 }
             }
         }
+
+        yield return null;
+
+        if (pathSucess)
+        {
+            wayPoints = RetracePath(startNode, targetNode);
+        }
+
+        requestManager.FinishedProcessingPath(wayPoints, pathSucess);
     }
 
     /// <summary>
@@ -116,7 +149,7 @@ public class PathFinding : MonoBehaviour
     /// </summary>
     /// <param name="startNode">start position</param>
     /// <param name="endNode">end position</param>
-    void RetracePath(Node startNode, Node endNode)
+    Vector3[] RetracePath(Node startNode, Node endNode)
     {
         List<Node> path = new List<Node>();
         Node currentNode = endNode;
@@ -126,9 +159,31 @@ public class PathFinding : MonoBehaviour
             path.Add(currentNode);
             currentNode = currentNode.parent;
         }
+        
+        Vector3[] waypoints = SimplifyPath(path);
+        Array.Reverse(waypoints);
 
-        path.Reverse();
-        gridPlane.path = path;
+        return waypoints;
+
+       // gridPlane.path = path;
+    }
+
+    Vector3[] SimplifyPath(List<Node> path)
+    {
+        List<Vector3> waypoints = new List<Vector3>();
+        Vector2 directionOld = Vector2.zero;
+
+        for (int i = 1; i < path.Count; i++)
+        {
+            Vector2 directionNew = new Vector2(path[i - 1].gridX - path[i].gridX, path[i - 1].gridY - path[i].gridY);
+            if (directionNew!= directionOld)
+            {
+                waypoints.Add(path[i].worldPosition);
+            }
+            directionOld = directionNew;
+        }
+
+        return waypoints.ToArray();
     }
 
     /// <summary>
