@@ -11,6 +11,8 @@ public class GridPlane : MonoBehaviour
       public Transform player;
      */
 
+    public bool onlyDisplayPathGizmos;
+
     /// <summary>
     /// LayerMask for unwalkable area
     /// </summary>
@@ -53,6 +55,14 @@ public class GridPlane : MonoBehaviour
         gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
 
         CreateGrid();
+    }
+
+    public int MaxSize
+    {
+        get
+        {
+            return gridSizeX * gridSizeY;
+        }
     }
 
     /// <summary>
@@ -134,6 +144,18 @@ public class GridPlane : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
+
+        if (onlyDisplayPathGizmos)
+        {
+            if (path!=null)
+            {
+                foreach (Node n in path)
+                {
+                    Gizmos.color = Color.black;
+                    Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
+                }
+            }
+        }
 
         if (grid!=null)
         {

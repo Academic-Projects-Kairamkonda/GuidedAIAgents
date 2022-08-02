@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Handles worldposition, walkable areas
 /// </summary>
-public class Node 
+public class Node: IHeapItem<Node>
 {
     /// <summary>
     /// Walkable area
@@ -41,6 +41,8 @@ public class Node
     /// </summary>
     public Node parent;
 
+    int heapIndex;
+
     /// <summary>
     /// constructor of the class
     /// </summary>
@@ -65,4 +67,28 @@ public class Node
         }
     }
 
+
+    public int HeapIndex
+    {
+        get
+        {
+            return heapIndex;
+        }
+        set
+        {
+            heapIndex = value;
+        }
+    }
+
+
+    public int CompareTo(Node nodeToCompare)
+    {
+        int compare = fCost.CompareTo(nodeToCompare.fCost);
+        if(compare==0)
+        {
+            compare = hCost.CompareTo(nodeToCompare.hCost);
+        }
+
+        return -compare;
+    }
 }
