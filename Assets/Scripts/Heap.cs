@@ -5,14 +5,29 @@ using UnityEngine;
 
 public class Heap <T> where T: IHeapItem<T>
 {
+    /// <summary>
+    /// items to hold for a heap
+    /// </summary>
     T[] items;
+
+    /// <summary>
+    /// keeps track of the item count
+    /// </summary>
     int currentItemCount;
-    
+
+    /// <summary>
+    /// constructor
+    /// </summary>
+    /// <param name="maxHeapSize">creates new heap</param>
     public Heap(int maxHeapSize)
     {
         items = new T[maxHeapSize];
     }
 
+    /// <summary>
+    /// add the item to the current count
+    /// </summary>
+    /// <param name="item">node</param>
     public void Add(T item)
     {
         item.HeapIndex = currentItemCount;
@@ -21,6 +36,10 @@ public class Heap <T> where T: IHeapItem<T>
         currentItemCount++;
     }
 
+    /// <summary>
+    /// removes the first node
+    /// </summary>
+    /// <returns>first item in node</returns>
     public T RemoveFirst()
     {
         T firstItem = items[0];
@@ -32,11 +51,18 @@ public class Heap <T> where T: IHeapItem<T>
         return firstItem;
     }
 
+    /// <summary>
+    /// Updates Item in the list
+    /// </summary>
+    /// <param name="item"></param>
     public void UpdateItem(T item)
     {
         SortUp(item);
     }
 
+    /// <summary>
+    /// property to current count
+    /// </summary>
     public int Count
     {
         get
@@ -45,11 +71,20 @@ public class Heap <T> where T: IHeapItem<T>
         }
     }
 
+    /// <summary>
+    /// check the item in the List
+    /// </summary>
+    /// <param name="item">neighbour node</param>
+    /// <returns></returns>
     public bool Contains(T item)
     {
         return Equals(items[item.HeapIndex], item);
     }
 
+    /// <summary>
+    /// sort the node, helps to remove the first item
+    /// </summary>
+    /// <param name="item">heap index</param>
     void SortDown(T item)
     {
         while (true)
@@ -86,6 +121,10 @@ public class Heap <T> where T: IHeapItem<T>
         }
     }
 
+    /// <summary>
+    /// sort up the items, helps to adds and update item
+    /// </summary>
+    /// <param name="item"></param>
     void SortUp(T item)
     {
         int parentIndex=(item.HeapIndex-1)/2;
@@ -106,6 +145,12 @@ public class Heap <T> where T: IHeapItem<T>
         }
     }
 
+
+    /// <summary>
+    /// Swaps the two items in the node
+    /// </summary>
+    /// <param name="itemA">first index</param>
+    /// <param name="itemB">second index </param>
     void Swap(T itemA, T itemB)
     {
         items[itemA.HeapIndex] = itemB;
@@ -117,6 +162,10 @@ public class Heap <T> where T: IHeapItem<T>
     }
 }
 
+/// <summary>
+/// Interface with type T 
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public interface IHeapItem<T>: IComparable<T>
 {
     int HeapIndex

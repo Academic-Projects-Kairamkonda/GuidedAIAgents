@@ -11,6 +11,9 @@ public class GridPlane : MonoBehaviour
       public Transform player;
      */
 
+    /// <summary>
+    /// bool to show only the path to target
+    /// </summary>
     public bool onlyDisplayPathGizmos;
 
     /// <summary>
@@ -48,6 +51,8 @@ public class GridPlane : MonoBehaviour
     /// </summary>
     int  gridSizeY;
 
+    #region Unity Methods
+
     void Start()
     {
         nodeDiameter = nodeRadius * 2;
@@ -57,6 +62,11 @@ public class GridPlane : MonoBehaviour
         CreateGrid();
     }
 
+    #endregion Unity Methods
+
+    /// <summary>
+    /// property returuns size of the maximum size of grid 
+    /// </summary>
     public int MaxSize
     {
         get
@@ -88,8 +98,8 @@ public class GridPlane : MonoBehaviour
     /// <summary>
     /// Neighbours data
     /// </summary>
-    /// <param name="node"></param>
-    /// <returns></returns>
+    /// <param name="node">current node </param>
+    /// <returns>check and add to neighbour node</returns>
     public List<Node> GetNeighbours(Node node)
     {
         List<Node> neighbours = new List<Node>();
@@ -118,7 +128,7 @@ public class GridPlane : MonoBehaviour
     /// Get the currrent node coordinates of the target object
     /// </summary>
     /// <param name="worldPosition">target position</param>
-    /// <returns></returns>
+    /// <returns>grid node of x and y</returns>
     public Node NodeFromWorldPoint(Vector3 worldPosition)
     {
         float percentX = (worldPosition.x + gridWorldSize.x / 2) / gridWorldSize.x;

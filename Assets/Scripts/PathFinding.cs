@@ -59,7 +59,7 @@ public class PathFinding : MonoBehaviour
 
         while(openSet.Count>0)
         {
-            /*
+            /* This function derived 
             Node currentNode = openSet[0];
            
             for (int i = 1; i < openSet.Count; i++)
