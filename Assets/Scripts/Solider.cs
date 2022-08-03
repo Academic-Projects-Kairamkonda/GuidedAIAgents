@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class Solider : MonoBehaviour
 {
-    [SerializeField]
-    private float speed=2f;
-    [SerializeField]
-    private Vector3 targetPos;
+    /// <summary>
+    /// 
+    /// </summary>
+    [SerializeField] private float speed=2f;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [SerializeField] private Vector3 targetPos;
 
 
-    // Start is called before the first frame update
+    #region Unity Methods
+
     void Start()
     {
         targetPos = RandPos();
@@ -34,6 +40,11 @@ public class Solider : MonoBehaviour
         }
     }
 
+    #endregion Unity Methods
+
+    /// <summary>
+    /// 
+    /// </summary>
     private void Movement()
     {
         //use MoveTowards
@@ -42,16 +53,26 @@ public class Solider : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, targetPos, step);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     private void ShortestPath()
     {
         //Move A* alogrithm
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     private void CheckCollision()
     {
         //Blocked Area
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     private Vector3 RandPos()
     {
         Vector3 pos;
@@ -60,6 +81,10 @@ public class Solider : MonoBehaviour
         return pos;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     private float RandValue()
     {
         float value;

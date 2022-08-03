@@ -4,16 +4,40 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public Transform target;
+
+    /// <summary>
+    /// 
+    /// </summary>
     float speed = 20;
 
+    /// <summary>
+    /// 
+    /// </summary>
     Vector3[] path;
+
+    /// <summary>
+    /// 
+    /// </summary>
     int targetIndex;
+
+    #region Unity Methods
+
     void Start()
     {
         PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
     }
 
+    #endregion Unity Methods
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="newPath"></param>
+    /// <param name="pathSuccessful"></param>
     public void OnPathFound(Vector3[] newPath, bool pathSuccessful)
     {
         if (pathSuccessful)
@@ -25,6 +49,10 @@ public class Unit : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     IEnumerator FollowPath()
     {
         Vector3 currentWaypoint = path[0];
@@ -49,7 +77,9 @@ public class Unit : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// 
+    /// </summary>
     public void OnDrawGizmos()
     {
         if (path!=null)

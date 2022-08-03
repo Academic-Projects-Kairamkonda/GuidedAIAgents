@@ -5,14 +5,32 @@ using System;
 
 public class PathRequestManager : MonoBehaviour
 {
+    /// <summary>
+    /// 
+    /// </summary>
     Queue<PathRequest> pathRequestsQueue = new Queue<PathRequest>();
+
+    /// <summary>
+    /// 
+    /// </summary>
     PathRequest currentPathRequest;
 
-    static PathRequestManager instance;
-
+    /// <summary>
+    /// 
+    /// </summary>
     PathFinding pathFinding;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    static PathRequestManager instance;
+
+    /// <summary>
+    /// 
+    /// </summary>
     bool isProcessingPath;
+
+    #region Unity Methods
 
     void Awake()
     {
@@ -20,6 +38,14 @@ public class PathRequestManager : MonoBehaviour
         pathFinding = GetComponent<PathFinding>();
     }
 
+    #endregion Unity Methods
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="pathStart"></param>
+    /// <param name="pathEnd"></param>
+    /// <param name="callback"></param>
     public static void RequestPath(Vector3 pathStart, Vector3 pathEnd, Action <Vector3[], bool> callback)
     {
         PathRequest newRequest = new PathRequest(pathStart, pathEnd, callback);
@@ -27,6 +53,9 @@ public class PathRequestManager : MonoBehaviour
         instance.TryProcessNext();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     void TryProcessNext()
     {
         if (!isProcessingPath && pathRequestsQueue.Count>0)
@@ -37,7 +66,11 @@ public class PathRequestManager : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="path"></param>
+    /// <param name="sucess"></param>
     public void FinishedProcessingPath(Vector3[] path, bool sucess)
     {
         currentPathRequest.callback(path, sucess);
@@ -45,6 +78,9 @@ public class PathRequestManager : MonoBehaviour
         TryProcessNext();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     struct PathRequest
     {
         public Vector3 pathStart;
@@ -58,6 +94,4 @@ public class PathRequestManager : MonoBehaviour
             callback = _callback;
         }
     }
-       
-
 }

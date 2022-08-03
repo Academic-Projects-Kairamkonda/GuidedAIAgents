@@ -11,23 +11,14 @@ using System;
 public class PathFinding : MonoBehaviour
 {
     /// <summary>
+    /// 
+    /// </summary>
+    PathRequestManager requestManager;
+
+    /// <summary>
     /// Grid plane positions
     /// </summary>
     GridPlane gridPlane;
-
-    PathRequestManager requestManager;
-
-    /* Path request Manager holds this data
-    /// <summary>
-    /// Seekes target for path
-    /// </summary>
-    public Transform seeker;
-
-    /// <summary>
-    /// target for seeker to calculate path
-    /// </summary>
-    public Transform target;
-    */
 
     #region Unity Methods
 
@@ -37,13 +28,6 @@ public class PathFinding : MonoBehaviour
         requestManager = GetComponent<PathRequestManager>();
     }
 
-    /* Removed because of adding the IEnumerator for FindPath()
-    void Update()
-    {
-        if (Input.GetButtonDown("Jump"))
-        FindPath(seeker.position, target.position);
-    }
-    */
 
     #endregion Unity Methods
 
@@ -59,12 +43,8 @@ public class PathFinding : MonoBehaviour
     /// <param name="targetPos">end position</param>
     IEnumerator FindPath(Vector3 startPos, Vector3 targetPos)
     {
-        Stopwatch sw = new Stopwatch();
-        sw.Start();
-
         Vector3[] wayPoints = new Vector3[0];
         bool pathSucess = false;
-
 
         Node startNode = gridPlane.NodeFromWorldPoint(startPos);
         Node targetNode = gridPlane.NodeFromWorldPoint(targetPos);
@@ -79,23 +59,6 @@ public class PathFinding : MonoBehaviour
 
             while (openSet.Count > 0)
             {
-                #region Commented Code
-                /* This function derived 
-                Node currentNode = openSet[0];
-
-                for (int i = 1; i < openSet.Count; i++)
-                {
-                    if (openSet[i].fCost<currentNode.fCost    ||
-                        openSet[i].fCost==currentNode.fCost &&
-                        openSet[i].hCost <currentNode.hCost)
-                    {
-                        currentNode = openSet[i];
-                    }
-                }
-
-                openSet.Remove(currentNode);
-                */
-                #endregion Commented code
 
                 Node currentNode = openSet.RemoveFirst();
 
@@ -103,10 +66,7 @@ public class PathFinding : MonoBehaviour
 
                 if (currentNode == targetNode)
                 {
-                    sw.Stop();
-                    print($"Path Found: {sw.ElapsedMilliseconds} ms");
                     pathSucess = true;
-                    //RetracePath(startNode, targetNode);
                     break;
                 }
 
@@ -168,6 +128,11 @@ public class PathFinding : MonoBehaviour
        // gridPlane.path = path;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns></returns>
     Vector3[] SimplifyPath(List<Node> path)
     {
         List<Vector3> waypoints = new List<Vector3>();
