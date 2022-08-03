@@ -27,6 +27,9 @@ public class Node: IHeapItem<Node>
     /// </summary>
     public int gridY;
 
+
+    public int movementPenalty;
+
     /// <summary>
     /// position of one diagonal move
     /// </summary>
@@ -52,12 +55,13 @@ public class Node: IHeapItem<Node>
     /// </summary>
     /// <param name="_walkable">Walkable area</param>
     /// <param name="_worldPos"> world co ordinates</param>
-    public Node(bool _walkable, Vector3 _worldPos, int _gridX, int _gridY)
+    public Node(bool _walkable, Vector3 _worldPos, int _gridX, int _gridY, int _penalty)
     {
         walkable = _walkable;
         worldPosition = _worldPos;
         gridX = _gridX;
         gridY = _gridY;
+        movementPenalty = _penalty;
     }
 
     /// <summary>

@@ -27,6 +27,11 @@ public class GridPlane : MonoBehaviour
     /// </summary>
     public float nodeRadius;
 
+    public TerrainType[] walkablerRegions;
+
+    LayerMask walkableMask;
+    Dictionary<int, int> walkableRegionDictionary = new Dictionary<int, int>();
+
     /// <summary>
     /// Grid node holds data of a current grid
     /// </summary>
@@ -54,6 +59,12 @@ public class GridPlane : MonoBehaviour
         nodeDiameter = nodeRadius * 2;
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
+
+        foreach (TerrainType region in walkablerRegions)
+        {
+            walkableMask.value |=  region.terrainMask.value;
+            walkableRegionDictionary.Add((int)Mathf.Log(region.terrainMask.value,2),region.terrainPenalty);
+        }
 
         CreateGrid();
     }
@@ -86,7 +97,22 @@ public class GridPlane : MonoBehaviour
             {
                 Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.forward * (y *nodeDiameter+ nodeRadius);
                 bool walkable = !(Physics.CheckSphere(worldPoint, nodeRadius,unwalkableMask));
-                grid[x, y] = new Node(walkable, worldPoint,x,y);
+
+                int movementPenalty = 0;
+
+                //raycast
+
+                if (walkable)
+                {
+                    Ray ray = new Ray(worldPoint + Vector3.up * 50, Vector3.down);
+                    RaycastHit hit;
+                    if (Physics.Raycast(ray,out hit, 100, walkableMask))
+                    {
+                        walkableRegionDictionary.TryGetValue(hit.collider.gameObject.layer, out movementPenalty);
+                    }
+                }
+
+                grid[x, y] = new Node(walkable, worldPoint,x,y,movementPenalty);
             }
         }
     }
@@ -156,5 +182,12 @@ public class GridPlane : MonoBehaviour
                 }
 			}
     }
+}
+
+[System.Serializable]
+public class TerrainType
+{
+    public LayerMask terrainMask;
+    public int terrainPenalty;
 }
 
