@@ -98,7 +98,6 @@ public class Node: IHeapItem<Node>
         {
             compare = hCost.CompareTo(nodeToCompare.hCost);
         }
-
         return -compare;
     }
 }

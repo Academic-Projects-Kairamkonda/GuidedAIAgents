@@ -167,6 +167,6 @@ public class PathFinding : MonoBehaviour
             return 14 * distY + 10 * (distX - distY);
         }
 
-        return 14 * distY + 10 * (distY - distX);
+        return 14 * distX + 10 * (distY - distX);
     }
 }
