@@ -59,7 +59,6 @@ public class PathFinding : MonoBehaviour
 
             while (openSet.Count > 0)
             {
-
                 Node currentNode = openSet.RemoveFirst();
 
                 closedSet.Add(currentNode);
@@ -70,25 +69,29 @@ public class PathFinding : MonoBehaviour
                     break;
                 }
 
-                foreach (Node neigbour in gridPlane.GetNeighbours(currentNode))
+                foreach (Node neighbour in gridPlane.GetNeighbours(currentNode))
                 {
-                    if (!neigbour.walkable || closedSet.Contains(neigbour))
+                    if (!neighbour.walkable || closedSet.Contains(neighbour))
                     {
                         continue;
                     }
 
-                    int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neigbour);
+                    int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
 
-                    if (newMovementCostToNeighbour < neigbour.gCost || !openSet.Contains(neigbour))
+                    if (newMovementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
                     {
-                        neigbour.gCost = newMovementCostToNeighbour;
-                        neigbour.hCost = GetDistance(neigbour, targetNode);
-                        neigbour.parent = currentNode;
+                        neighbour.gCost = newMovementCostToNeighbour;
+                        neighbour.hCost = GetDistance(neighbour, targetNode);
+                        neighbour.parent = currentNode;
 
-                        if (!openSet.Contains(neigbour))
+                        if (!openSet.Contains(neighbour))
                         {
-                            openSet.Add(neigbour);
+                            openSet.Add(neighbour);
 						}
+                        else
+                        {
+                            openSet.UpdateItem(neighbour);
+                        }
                     }
                 }
             }

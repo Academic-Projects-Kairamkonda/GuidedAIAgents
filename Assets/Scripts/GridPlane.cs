@@ -7,6 +7,9 @@ using UnityEngine;
 /// </summary>
 public class GridPlane : MonoBehaviour
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public bool displayGridGizmos;
 
     /// <summary>
