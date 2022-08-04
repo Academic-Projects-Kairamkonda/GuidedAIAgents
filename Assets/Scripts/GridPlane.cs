@@ -27,9 +27,19 @@ public class GridPlane : MonoBehaviour
     /// </summary>
     public float nodeRadius;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public TerrainType[] walkablerRegions;
 
+    /// <summary>
+    /// 
+    /// </summary>
     LayerMask walkableMask;
+
+    /// <summary>
+    /// 
+    /// </summary>
     Dictionary<int, int> walkableRegionDictionary = new Dictionary<int, int>();
 
     /// <summary>
@@ -184,6 +194,9 @@ public class GridPlane : MonoBehaviour
     }
 }
 
+/// <summary>
+///  
+/// </summary>
 [System.Serializable]
 public class TerrainType
 {

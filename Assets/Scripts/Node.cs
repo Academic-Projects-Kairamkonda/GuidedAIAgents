@@ -27,7 +27,9 @@ public class Node: IHeapItem<Node>
     /// </summary>
     public int gridY;
 
-
+    /// <summary>
+    /// 
+    /// </summary>
     public int movementPenalty;
 
     /// <summary>
