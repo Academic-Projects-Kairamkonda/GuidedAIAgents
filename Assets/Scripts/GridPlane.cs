@@ -32,6 +32,8 @@ public class GridPlane : MonoBehaviour
     /// </summary>
     public TerrainType[] walkablerRegions;
 
+    public int obstacleProximityPenalty = 10;
+
     /// <summary>
     /// 
     /// </summary>
@@ -61,6 +63,9 @@ public class GridPlane : MonoBehaviour
     /// grid of the plane y axis
     /// </summary>
     int  gridSizeY;
+
+    int penaltyMin = int.MaxValue;
+    int penaltyMax = int.MinValue;
 
     #region Unity Methods
 
@@ -112,16 +117,19 @@ public class GridPlane : MonoBehaviour
 
                 //raycast
 
-                if (walkable)
+                Ray ray = new Ray(worldPoint + Vector3.up * 50, Vector3.down);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray,out hit, 100, walkableMask))
                 {
-                    Ray ray = new Ray(worldPoint + Vector3.up * 50, Vector3.down);
-                    RaycastHit hit;
-                    if (Physics.Raycast(ray,out hit, 100, walkableMask))
-                    {
-                        walkableRegionDictionary.TryGetValue(hit.collider.gameObject.layer, out movementPenalty);
-                    }
+                    walkableRegionDictionary.TryGetValue(hit.collider.gameObject.layer, out movementPenalty);
                 }
 
+
+                if (!walkable)
+                {
+                    movementPenalty += obstacleProximityPenalty;
+                }
                 grid[x, y] = new Node(walkable, worldPoint,x,y,movementPenalty);
             }
         }
@@ -153,16 +161,18 @@ public class GridPlane : MonoBehaviour
                 penaltiesHorizontalPass[x, y] = penaltiesHorizontalPass[x - 1, y] - grid[removeIndex, y].movementPenalty + grid[addIndex, y].movementPenalty;
 
             }
-
         }
 
         for (int x = 0; x < gridSizeX; x++)
         {
             for (int y = -kernelExtents; y <= kernelExtents; y++)
             {
-                int sampleY = Mathf.Clamp(x, 0, kernelExtents);
+                int sampleY = Mathf.Clamp(y, 0, kernelExtents);
                 penaltiesVerticalPass[x, 0] += penaltiesHorizontalPass[x, sampleY];
             }
+
+            int blurredPenalty = Mathf.RoundToInt((float)penaltiesVerticalPass[x, 0] / (kernelSize * kernelSize));
+            grid[x, 0].movementPenalty = blurredPenalty;
 
             for (int y = 1; y < gridSizeY; y++)
             {
@@ -171,8 +181,17 @@ public class GridPlane : MonoBehaviour
 
                 penaltiesVerticalPass[x, y] = penaltiesVerticalPass[x, y-1] - penaltiesHorizontalPass[x, removeIndex] + penaltiesHorizontalPass[x, addIndex];
 
-                int blurredPenalty =Mathf.RoundToInt((float)penaltiesHorizontalPass[x, y] / (kernelSize * kernelSize));
+                blurredPenalty =Mathf.RoundToInt((float)penaltiesVerticalPass[x, y] / (kernelSize * kernelSize));
                 grid[x, y].movementPenalty = blurredPenalty;
+
+                if (blurredPenalty>penaltyMax)
+                {
+                    penaltyMax = blurredPenalty;
+                }
+                if (blurredPenalty<penaltyMin)
+                {
+                    penaltyMin = blurredPenalty;
+                }
             }
         }
     }
@@ -236,9 +255,9 @@ public class GridPlane : MonoBehaviour
             {
                 foreach (Node n in grid)
                 {
-                    Gizmos.color = (n.walkable) ? Color.white : Color.red;
-
-                    Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
+                    Gizmos.color = Color.Lerp(Color.white, Color.black,Mathf.InverseLerp(penaltyMin,penaltyMax,n.movementPenalty));
+                    Gizmos.color = (n.walkable) ? Gizmos.color: Color.red;
+                    Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter));
                 }
 			}
     }
