@@ -32,6 +32,9 @@ public class GridPlane : MonoBehaviour
     /// </summary>
     public TerrainType[] walkablerRegions;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public int obstacleProximityPenalty = 10;
 
     /// <summary>
@@ -64,7 +67,14 @@ public class GridPlane : MonoBehaviour
     /// </summary>
     int  gridSizeY;
 
+    /// <summary>
+    /// 
+    /// </summary>
     int penaltyMin = int.MaxValue;
+
+    /// <summary>
+    /// 
+    /// </summary>
     int penaltyMax = int.MinValue;
 
     #region Unity Methods
@@ -137,6 +147,10 @@ public class GridPlane : MonoBehaviour
         BlurPenaltyMap(3);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="blurSize"></param>
     void BlurPenaltyMap(int blurSize)
     {
         int kernelSize = blurSize * 2 + 1;
