@@ -12,17 +12,11 @@ public class Unit : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    float speed = 20;
+    public float speed = 20;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    Vector3[] path;
+    public float turnDst = 5;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    int targetIndex;
+    Path path;
 
     #region Unity Methods
 
@@ -38,12 +32,11 @@ public class Unit : MonoBehaviour
     /// </summary>
     /// <param name="newPath"></param>
     /// <param name="pathSuccessful"></param>
-    public void OnPathFound(Vector3[] newPath, bool pathSuccessful)
+    public void OnPathFound(Vector3[] waypoints, bool pathSuccessful)
     {
         if (pathSuccessful)
         {
-            path = newPath;
-            targetIndex =0;
+            path = new Path(waypoints,transform.position,turnDst);
             StopCoroutine(FollowPath());
             StartCoroutine(FollowPath());
         }
@@ -55,24 +48,8 @@ public class Unit : MonoBehaviour
     /// <returns></returns>
     IEnumerator FollowPath()
     {
-        Vector3 currentWaypoint = path[0];
-
         while (true)
         {
-            if (transform.position==currentWaypoint)
-            {
-                targetIndex++;
-
-                if (targetIndex >= path.Length)
-                {
-                    yield break;
-                }
-
-                currentWaypoint = path[targetIndex];
-            }
-
-            transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed*Time.deltaTime);
-
             yield return null;
         }
     }
@@ -84,19 +61,7 @@ public class Unit : MonoBehaviour
     {
         if (path!=null)
         {
-            for (int i = targetIndex; i < path.Length; i++)
-            {
-                Gizmos.color = Color.black;
-                Gizmos.DrawCube(path[i], Vector3.one);
-                if (i==targetIndex)
-                {
-                    Gizmos.DrawLine(transform.position, path[i]);
-                }
-                else
-                {
-                    Gizmos.DrawLine(path[i - 1], path[i]);
-                }
-            }
+            path.DrawWithGizmos();
         }
     }
 }
