@@ -10,10 +10,6 @@ using System;
 /// </summary>
 public class PathFinding : MonoBehaviour
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    PathRequestManager requestManager;
 
     /// <summary>
     /// Grid plane positions
@@ -25,29 +21,23 @@ public class PathFinding : MonoBehaviour
     void Awake()
     {
         gridPlane = GetComponent<GridPlane>();
-        requestManager = GetComponent<PathRequestManager>();
     }
 
 
     #endregion Unity Methods
-
-    public void StartFindPath(Vector3 startPos, Vector3 targetPos)
-    {
-        StartCoroutine(FindPath(startPos, targetPos));
-    }
 
     /// <summary>
     /// Calculates the route to target position
     /// </summary>
     /// <param name="startPos">start position</param>
     /// <param name="targetPos">end position</param>
-    IEnumerator FindPath(Vector3 startPos, Vector3 targetPos)
+   public void FindPath(PathRequest request, Action<PathResult> callback)
     {
         Vector3[] wayPoints = new Vector3[0];
         bool pathSucess = false;
 
-        Node startNode = gridPlane.NodeFromWorldPoint(startPos);
-        Node targetNode = gridPlane.NodeFromWorldPoint(targetPos);
+        Node startNode = gridPlane.NodeFromWorldPoint(request.pathStart);
+        Node targetNode = gridPlane.NodeFromWorldPoint(request.pathEnd);
 
         if (startNode.walkable && targetNode.walkable)
         {
@@ -97,14 +87,14 @@ public class PathFinding : MonoBehaviour
             }
         }
 
-        yield return null;
 
         if (pathSucess)
         {
             wayPoints = RetracePath(startNode, targetNode);
+            pathSucess = wayPoints.Length > 0;
         }
 
-        requestManager.FinishedProcessingPath(wayPoints, pathSucess);
+        callback(new PathResult(wayPoints, pathSucess, request.callback));
     }
 
     /// <summary>

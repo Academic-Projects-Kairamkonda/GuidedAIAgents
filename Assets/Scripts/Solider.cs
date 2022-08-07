@@ -14,7 +14,6 @@ public class Solider : MonoBehaviour
     /// </summary>
     [SerializeField] private Vector3 targetPos;
 
-
     #region Unity Methods
 
     void Start()

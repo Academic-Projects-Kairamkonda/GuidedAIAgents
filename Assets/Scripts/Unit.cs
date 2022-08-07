@@ -78,7 +78,7 @@ public class Unit : MonoBehaviour
         {
             yield return new WaitForSeconds(.3f);
         }
-        PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+        PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
 
         float sqrMoveThresshold = pathUpdateMoveThreshold * pathUpdateMoveThreshold;
         Vector3 targetPosOld = target.position;
@@ -89,7 +89,7 @@ public class Unit : MonoBehaviour
                  
             if ((target.position-targetPosOld).sqrMagnitude>sqrMoveThresshold)
             {
-                PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+                PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
                 targetPosOld = target.position;
             }
         }

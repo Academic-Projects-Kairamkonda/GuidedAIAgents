@@ -238,6 +238,7 @@ MonoBehaviour:
   speed: 20
   turnDst: 5
   turnSpeed: 3
+  stoppingDst: 10
 --- !u!1 &509872879
 GameObject:
   m_ObjectHideFlags: 0
@@ -896,6 +897,7 @@ MonoBehaviour:
   speed: 20
   turnDst: 5
   turnSpeed: 3
+  stoppingDst: 10
 --- !u!136 &1306605413
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1223,6 +1225,7 @@ MonoBehaviour:
   speed: 20
   turnDst: 5
   turnSpeed: 3
+  stoppingDst: 10
 --- !u!136 &1464328867
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1302,7 +1305,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1487591433
 Transform:
   m_ObjectHideFlags: 0
