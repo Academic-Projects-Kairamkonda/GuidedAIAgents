@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
+    /// <summary>
+    /// 
+    /// </summary>
     const float minPathUpdateTime = .2f;
+
+    /// <summary>
+    /// 
+    /// </summary>
     const float pathUpdateMoveThreshold = .5f;
 
     /// <summary>
@@ -17,10 +24,24 @@ public class Unit : MonoBehaviour
     /// </summary>
     public float speed = 20;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public float turnDst = 5;
+
+    /// <summary>
+    /// 
+    /// </summary>
     public float turnSpeed = 3;
+
+    /// <summary>
+    /// 
+    /// </summary>
     public float stoppingDst = 10;
 
+    /// <summary>
+    /// 
+    /// </summary>
     Path path;
 
     #region Unity Methods
@@ -47,6 +68,10 @@ public class Unit : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     IEnumerator UpdatePath()
     {
         if (Time.timeSinceLevelLoad<.3f)

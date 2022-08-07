@@ -4,11 +4,33 @@ using UnityEngine;
 
 public class Path
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public readonly Vector3[] lookpoints;
+
+    /// <summary>
+    /// 
+    /// </summary>
     public readonly Line[] turnBoundaries;
+
+    /// <summary>
+    /// 
+    /// </summary>
     public readonly int finishLineIndex;
+
+    /// <summary>
+    /// 
+    /// </summary>
     public readonly int slowDownIndex;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="waypoints"></param>
+    /// <param name="startPos"></param>
+    /// <param name="turnDst"></param>
+    /// <param name="stoppingDst"></param>
     public Path(Vector3[] waypoints, Vector3 startPos, float turnDst, float stoppingDst )
     {
         lookpoints = waypoints;
@@ -40,12 +62,20 @@ public class Path
     }
 
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="v3"></param>
+    /// <returns></returns>
     Vector2 V3ToV2(Vector3 v3)
     {
         return new Vector2(v3.x, v3.z);
     }
 
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void DrawWithGizmos()
     {
         Gizmos.color = Color.black;

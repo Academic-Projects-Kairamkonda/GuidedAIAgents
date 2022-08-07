@@ -4,18 +4,46 @@ using UnityEngine;
 
 public struct Line
 {
+    /// <summary>
+    /// 
+    /// </summary>
     const float verticalLineGradient = 1e5f;
 
+    /// <summary>
+    /// 
+    /// </summary>
     float gradient;
+
+    /// <summary>
+    /// 
+    /// </summary>
     float y_intercept;
 
+    /// <summary>
+    /// 
+    /// </summary>
     Vector2 pointOnLine_1;
+
+    /// <summary>
+    /// 
+    /// </summary>
     Vector2 pointOnLine_2;
 
+    /// <summary>
+    /// 
+    /// </summary>
     float gradientPerpendicular;
 
+    /// <summary>
+    /// 
+    /// </summary>
     bool approachSide;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="pointOnLine"></param>
+    /// <param name="pointPerpendicularToLine"></param>
     public Line(Vector2 pointOnLine, Vector2 pointPerpendicularToLine)
     {
         float dx = pointOnLine.x - pointPerpendicularToLine.x;
@@ -47,17 +75,32 @@ public struct Line
         approachSide = false;
         approachSide = GetSide(pointPerpendicularToLine);
     }
-    
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="p"></param>
+    /// <returns></returns>
     bool GetSide(Vector2 p)
     {
         return (p.x - pointOnLine_1.x) * (pointOnLine_2.y-pointOnLine_1.y)>(p.y-pointOnLine_1.y)*(pointOnLine_2.x-pointOnLine_1.x);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="p"></param>
+    /// <returns></returns>
     public bool HasCrossedLine(Vector2 p)
     {
         return GetSide(p) != approachSide;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="p"></param>
+    /// <returns></returns>
     public float DistanceFromPoint(Vector2 p)
     {
         float yInterceptPerpendicular = p.y - gradientPerpendicular*p.x;
@@ -67,6 +110,10 @@ public struct Line
         return Vector2.Distance(p, new Vector2(intersectX, intersectY));
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="length"></param>
     public void DrawWithGizmos(float length)
     {
         Vector3 lineDir = new Vector3(1, 0, gradient).normalized;
