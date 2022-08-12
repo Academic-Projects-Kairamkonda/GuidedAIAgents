@@ -14,6 +14,8 @@ public class Solider : MonoBehaviour
     /// </summary>
     [SerializeField] private Vector3 targetPos;
 
+    public Transform[] targetLocationOnRoad;
+
     #region Unity Methods
 
     void Start()
@@ -21,6 +23,7 @@ public class Solider : MonoBehaviour
         targetPos = RandPos();
     }
 
+    /*
     void FixedUpdate()
     {
         Movement();
@@ -38,6 +41,7 @@ public class Solider : MonoBehaviour
             targetPos = RandPos();
         }
     }
+    */
 
     #endregion Unity Methods
 
