@@ -7,7 +7,7 @@ public class UnitStats : MonoBehaviour
     public Transform targetTransform;
     private Solider GetSolider;
 
-    private float lifeTime;
+    private float lifeTime=0;
     private int killedTarget;
 
     void OnEnable()
@@ -18,15 +18,12 @@ public class UnitStats : MonoBehaviour
         //this.GetComponent<Unit>().target = GetSolider.targetLocationOnRoad[Random.Range(0,3)];
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void GetUnitLifeTime()
     {
-        
+        lifeTime += 1 * Time.deltaTime;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }
+
+

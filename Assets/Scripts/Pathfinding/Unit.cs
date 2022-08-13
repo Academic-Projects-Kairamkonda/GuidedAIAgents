@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Unit : MonoBehaviour
 {
@@ -44,11 +45,19 @@ public class Unit : MonoBehaviour
     /// </summary>
     Path path;
 
+    private UnitTextInfo unitTextInfo;
+
     #region Unity Methods
+
+    void Awake()
+    {
+        unitTextInfo = this.GetComponent<UnitTextInfo>();
+    }
 
     void Start()
     {
         StartCoroutine(UpdatePath());
+        unitTextInfo.SetTextInfo(" I have found the path");
     }
 
     #endregion Unity Methods
@@ -65,6 +74,7 @@ public class Unit : MonoBehaviour
             path = new Path(waypoints,transform.position,turnDst,stoppingDst);
             StopCoroutine(FollowPath());
             StartCoroutine(FollowPath());
+
         }
     }
 
