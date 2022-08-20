@@ -10,7 +10,6 @@ using System;
 /// </summary>
 public class PathFinding : MonoBehaviour
 {
-
     /// <summary>
     /// Grid plane positions
     /// </summary>
@@ -22,7 +21,6 @@ public class PathFinding : MonoBehaviour
     {
         gridPlane = GetComponent<GridPlane>();
     }
-
 
     #endregion Unity Methods
 

@@ -5,22 +5,33 @@ using TMPro;
 
 public class UnitTextInfo : MonoBehaviour
 {
-    private TextMeshPro unitText;
+    public TextMeshPro unitText;
 
-    public string unitState = " I am looking";
+    private string unitState = " Empty";
+
+    public string UnitState
+    {
+        get
+        {
+            return unitState;
+        }
+
+        set
+        {
+            unitState = value;
+        }
+    }
+
+    public static UnitTextInfo instance;
 
     void Awake()
     {
+        instance = this;
         unitText = this.GetComponentInChildren<TextMeshPro>();
     }
-    void Start()
+
+    void Update()
     {
         unitText.text =unitState.ToString();
     }
-
-    public void SetTextInfo(string name)
-    {
-        unitText.text = name.ToString();
-    }
- 
 }
