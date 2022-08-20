@@ -10,6 +10,8 @@ public class SkillState : BaseState
         unitState = "Skill State";
 
         commandRequestManager._rank++;
+
+        commandRequestManager._unit.IntitatePath();
     }
 
     public override void UpdateState(CommandRequestManager commandRequestManager)

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+
 
 public class Unit : MonoBehaviour
 {
@@ -47,16 +47,19 @@ public class Unit : MonoBehaviour
 
     private UnitTextInfo unitTextInfo;
 
+    public  Unit instance;
+
     #region Unity Methods
 
     void Awake()
     {
+        instance = this;
         unitTextInfo = this.GetComponent<UnitTextInfo>();
     }
 
     void Start()
     {
-        StartCoroutine(UpdatePath());
+        //StartCoroutine(UpdatePath());
     }
 
     #endregion Unity Methods
@@ -71,9 +74,18 @@ public class Unit : MonoBehaviour
         if (pathSuccessful)
         {
             path = new Path(waypoints,transform.position,turnDst,stoppingDst);
+
             StopCoroutine(FollowPath());
             StartCoroutine(FollowPath());
         }
+    }
+
+    /// <summary>
+    /// start the agent to move
+    /// </summary>
+    public void IntitatePath()
+    {
+        PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
     }
 
     /// <summary>
@@ -86,6 +98,7 @@ public class Unit : MonoBehaviour
         {
             yield return new WaitForSeconds(.3f);
         }
+
         PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
 
         float sqrMoveThresshold = pathUpdateMoveThreshold * pathUpdateMoveThreshold;
@@ -109,9 +122,6 @@ public class Unit : MonoBehaviour
     /// <returns></returns>
     IEnumerator FollowPath()
     {
-
-        yield return new WaitForSeconds(3f);
-
         bool followingPath = true;
         int pathIndex = 0;
         transform.LookAt(path.lookpoints[0]);

@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+
 
 public class UnitTextInfo : MonoBehaviour
 {
-    public TextMeshPro unitText;
+    public TextMesh unitText;
 
     private string unitState = " Empty";
 
@@ -27,7 +27,7 @@ public class UnitTextInfo : MonoBehaviour
     void Awake()
     {
         instance = this;
-        unitText = this.GetComponentInChildren<TextMeshPro>();
+        unitText = this.GetComponentInChildren<TextMesh>();
     }
 
     void Update()

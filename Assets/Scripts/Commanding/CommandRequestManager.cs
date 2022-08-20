@@ -1,15 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-using Unity.VisualScripting;
 
 public class CommandRequestManager : MonoBehaviour
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public BaseState currentState;
+
+    /// <summary>
+    /// 
+    /// </summary>
     public TextMesh _agentLevel;
+
+    /// <summary>
+    /// 
+    /// </summary>
     public TextMesh _agentState;
+
+    /// <summary>
+    /// 
+    /// </summary>
     public TextMesh _agentLifeTime;
+
+    public Unit _unit;
 
     public int _rank=1;
 
@@ -18,6 +33,8 @@ public class CommandRequestManager : MonoBehaviour
 
     void Awake()
     {
+        _unit = this.GetComponent<Unit>();
+
         _agentLevel = this.transform.Find("Agent Stats/Agent Level").GetComponent<TextMesh>();
         _agentState = this.transform.Find("Agent Stats/State").GetComponent<TextMesh>();
         _agentLifeTime= this.transform.Find("Agent Stats/Lifetime").GetComponent<TextMesh>();

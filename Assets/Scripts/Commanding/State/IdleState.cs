@@ -19,7 +19,7 @@ public class IdleState : BaseState
 
         //Debug.Log($"Life time of  a agent {unitLifeTime}");
 
-        if (unitLifeTime>3)
+        if (unitLifeTime>10)
         {
             commandRequestManager.SwitchState(commandRequestManager._skillState);
         }
