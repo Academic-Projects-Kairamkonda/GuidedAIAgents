@@ -57,7 +57,7 @@ public class Unit : MonoBehaviour
     void Start()
     {
         StartCoroutine(UpdatePath());
-        unitTextInfo.SetTextInfo(" I have found the path");
+        unitTextInfo.SetTextInfo("Looking for \n target");
     }
 
     #endregion Unity Methods
@@ -74,7 +74,6 @@ public class Unit : MonoBehaviour
             path = new Path(waypoints,transform.position,turnDst,stoppingDst);
             StopCoroutine(FollowPath());
             StartCoroutine(FollowPath());
-
         }
     }
 
@@ -84,6 +83,8 @@ public class Unit : MonoBehaviour
     /// <returns></returns>
     IEnumerator UpdatePath()
     {
+        unitTextInfo.SetTextInfo("Rerouting Path");
+
         if (Time.timeSinceLevelLoad<.3f)
         {
             yield return new WaitForSeconds(.3f);
@@ -146,6 +147,8 @@ public class Unit : MonoBehaviour
                 Quaternion targetRotation = Quaternion.LookRotation(path.lookpoints[pathIndex] - transform.position);
                 transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
                 transform.Translate(Vector3.forward * Time.deltaTime * speed* speedPercent, Space.Self);
+
+                unitTextInfo.SetTextInfo("Following path");
             }
 
             yield return null;

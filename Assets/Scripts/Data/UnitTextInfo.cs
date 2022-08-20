@@ -21,7 +21,6 @@ public class UnitTextInfo : MonoBehaviour
     public void SetTextInfo(string name)
     {
         unitText.text = name.ToString();
-        Debug.Log("Unit Text state Updated");
     }
  
 }
