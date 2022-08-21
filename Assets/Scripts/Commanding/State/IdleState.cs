@@ -5,21 +5,22 @@ using UnityEngine;
 
 public class IdleState : BaseState
 {
-    public float unitLifeTime;
-
     public override void EnterState(CommandRequestManager commandRequestManager)
     {
-        Debug.Log("Entered into Idle State");
+        //Debug.Log("Entered into Idle State");
         unitState = "Idle State";
+
+        //commandRequestManager._unit.target = commandRequestManager.targets[0];
+    }
+
+    public override void OnCollisionEnter(CommandRequestManager predator, Collision collision)
+    {
+        Debug.Log("Enter into Idle collision State");
     }
 
     public override void UpdateState(CommandRequestManager commandRequestManager)
     {
-        unitLifeTime += 1 * Time.deltaTime;
-
-        //Debug.Log($"Life time of  a agent {unitLifeTime}");
-
-        if (unitLifeTime>10)
+        if (commandRequestManager._unitLifeTime>10)
         {
             commandRequestManager.SwitchState(commandRequestManager._skillState);
         }

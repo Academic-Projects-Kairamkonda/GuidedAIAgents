@@ -28,8 +28,11 @@ public class CommandRequestManager : MonoBehaviour
 
     public int _rank=1;
 
+    public float _unitLifeTime;
+
     public IdleState _idleState = new IdleState();
     public SkillState _skillState = new SkillState();
+
 
     void Awake()
     {
@@ -50,6 +53,13 @@ public class CommandRequestManager : MonoBehaviour
     {
         currentState.UpdateState(this);
         UnitTextUpdate();
+
+        _unitLifeTime += 1 * Time.deltaTime;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        currentState.OnCollisionEnter(this, collision);
     }
 
     public void SwitchState(BaseState state)
@@ -62,7 +72,7 @@ public class CommandRequestManager : MonoBehaviour
     {
         _agentLevel.text = $"Agent Level {_rank}";
         _agentState.text= currentState.unitState;
-        _agentLifeTime.text = Mathf.RoundToInt(_idleState.unitLifeTime).ToString();
+        _agentLifeTime.text = $"Life time: {Mathf.RoundToInt(_unitLifeTime).ToString()}";
     }
 
 }

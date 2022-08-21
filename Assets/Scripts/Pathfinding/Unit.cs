@@ -45,16 +45,12 @@ public class Unit : MonoBehaviour
     /// </summary>
     Path path;
 
-    private UnitTextInfo unitTextInfo;
-
-    public  Unit instance;
 
     #region Unity Methods
 
     void Awake()
     {
-        instance = this;
-        unitTextInfo = this.GetComponent<UnitTextInfo>();
+        this.target = this.GetComponentInParent<TargetRequestManager>().targets[0].transform;
     }
 
     void Start()
@@ -83,9 +79,9 @@ public class Unit : MonoBehaviour
     /// <summary>
     /// start the agent to move
     /// </summary>
-    public void IntitatePath()
+    public void IntitatePath(Transform _target)
     {
-        PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
+        PathRequestManager.RequestPath(new PathRequest(transform.position, _target.position, OnPathFound));
     }
 
     /// <summary>
