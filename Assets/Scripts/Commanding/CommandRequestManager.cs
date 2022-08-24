@@ -47,9 +47,13 @@ public class CommandRequestManager : MonoBehaviour
     /// </summary>
     public float timeIncreaseSpeed=1;
 
+    private Ranking GetRanking;
+
     void Awake()
     {
         _unit = this.GetComponent<Unit>();
+
+        GetRanking = this.transform.GetComponent<Ranking>();
 
         _agentLevel = this.transform.Find("Agent Stats/Agent Level").GetComponent<TextMesh>();
         _agentState = this.transform.Find("Agent Stats/State").GetComponent<TextMesh>();
