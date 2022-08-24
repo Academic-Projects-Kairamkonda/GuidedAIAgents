@@ -6,6 +6,7 @@ public class CommandRequestManager : MonoBehaviour
 {
     public IdleState _idleState = new IdleState();
     public SkillState _skillState = new SkillState();
+    public RerouteState _rerouteState = new RerouteState();
 
     /// <summary>
     /// 
@@ -49,9 +50,13 @@ public class CommandRequestManager : MonoBehaviour
 
     private Ranking GetRanking;
 
+    public TargetRequestManager _targetRequestManager;
+
+
     void Awake()
     {
         _unit = this.GetComponent<Unit>();
+        _targetRequestManager = this.GetComponentInParent<TargetRequestManager>();
 
         GetRanking = this.transform.GetComponent<Ranking>();
 
@@ -72,11 +77,6 @@ public class CommandRequestManager : MonoBehaviour
         UnitTextUpdate();
 
         _unitLifeTime += timeIncreaseSpeed * Time.deltaTime;
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        currentState.OnCollisionEnter(this, collision);
     }
 
     public void SwitchState(BaseState state)

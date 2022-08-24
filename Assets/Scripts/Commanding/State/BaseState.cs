@@ -10,5 +10,4 @@ public abstract class BaseState
 
     public abstract void UpdateState(CommandRequestManager commandRequestManager);
 
-    public abstract void OnCollisionEnter(CommandRequestManager predator, Collision collision);
 }

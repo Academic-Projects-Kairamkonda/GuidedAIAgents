@@ -50,7 +50,7 @@ public class Unit : MonoBehaviour
 
     void Awake()
     {
-        this.target = this.GetComponentInParent<TargetRequestManager>().targets[0].transform;
+        
     }
 
     void Start()
@@ -82,6 +82,13 @@ public class Unit : MonoBehaviour
     public void IntitatePath(Transform _target)
     {
         PathRequestManager.RequestPath(new PathRequest(transform.position, _target.position, OnPathFound));
+    }
+
+    public void StopPath()
+    {
+        StopCoroutine(FollowPath());
+
+        Debug.Log("Function called");
     }
 
     /// <summary>

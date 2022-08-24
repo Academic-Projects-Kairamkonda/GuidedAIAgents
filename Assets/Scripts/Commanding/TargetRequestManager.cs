@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class TargetRequestManager : MonoBehaviour
 {
-    public Transform[] targets;
+    public Transform[] _checkPoints;
 }

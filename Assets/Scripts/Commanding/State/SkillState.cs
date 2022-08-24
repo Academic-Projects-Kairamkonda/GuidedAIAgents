@@ -6,29 +6,29 @@ public class SkillState : BaseState
 {
     public override void EnterState(CommandRequestManager commandRequestManager)
     {
-        //Debug.Log($"Entered in {commandRequestManager.currentState}");
         unitState = "Skill State";
 
         commandRequestManager._rank++;
         commandRequestManager.timeIncreaseSpeed = 1f;
-
+        commandRequestManager._unit.target=commandRequestManager._targetRequestManager._checkPoints[Random.Range(0, 2)];
         commandRequestManager._unit.IntitatePath(commandRequestManager._unit.target);
     }
 
-    public override void OnCollisionEnter(CommandRequestManager predator, Collision collision)
-    {
-        GameObject other = collision.gameObject;
-
-        Debug.Log("Enter in collision state");
-
-        if (other.transform.GetComponentInParent<AgentClass>())
-        {
-            Debug.Log("Change Position");
-        }
-    }
 
     public override void UpdateState(CommandRequestManager commandRequestManager)
     {
-        
+        Collider[] hitColliders = Physics.OverlapSphere(commandRequestManager.transform.position, 3f);
+        foreach (var hitCollider in hitColliders)
+        {
+            if(hitCollider.transform.GetComponent<GuideAnotherTarget>())
+            {
+                /*
+                commandRequestManager._unit.target = hitCollider.transform.GetComponent<GuideAnotherTarget>().checkpoints[0];
+                commandRequestManager._unit.IntitatePath(commandRequestManager._unit.target);
+                */
+                commandRequestManager._unit.StopPath();
+                commandRequestManager.SwitchState(commandRequestManager._rerouteState);
+            }
+        }
     }
 }
