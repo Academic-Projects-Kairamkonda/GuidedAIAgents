@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CommandRequestManager : MonoBehaviour
 {
+    public IdleState _idleState = new IdleState();
+    public SkillState _skillState = new SkillState();
+
     /// <summary>
     /// 
     /// </summary>
@@ -24,15 +27,25 @@ public class CommandRequestManager : MonoBehaviour
     /// </summary>
     public TextMesh _agentLifeTime;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public Unit _unit;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public int _rank=1;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public float _unitLifeTime;
 
-    public IdleState _idleState = new IdleState();
-    public SkillState _skillState = new SkillState();
-
+    /// <summary>
+    /// 
+    /// </summary>
+    public float timeIncreaseSpeed=1;
 
     void Awake()
     {
@@ -54,7 +67,7 @@ public class CommandRequestManager : MonoBehaviour
         currentState.UpdateState(this);
         UnitTextUpdate();
 
-        _unitLifeTime += 1 * Time.deltaTime;
+        _unitLifeTime += timeIncreaseSpeed * Time.deltaTime;
     }
 
     void OnCollisionEnter(Collision collision)

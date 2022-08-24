@@ -5,10 +5,14 @@ using UnityEngine;
 
 public class IdleState : BaseState
 {
+    private const int idleStateTime=2;
+
     public override void EnterState(CommandRequestManager commandRequestManager)
     {
         //Debug.Log("Entered into Idle State");
         unitState = "Idle State";
+
+        commandRequestManager.timeIncreaseSpeed = 0.2f;
 
         //commandRequestManager._unit.target = commandRequestManager.targets[0];
     }
@@ -20,7 +24,7 @@ public class IdleState : BaseState
 
     public override void UpdateState(CommandRequestManager commandRequestManager)
     {
-        if (commandRequestManager._unitLifeTime>10)
+        if (commandRequestManager._unitLifeTime>idleStateTime)
         {
             commandRequestManager.SwitchState(commandRequestManager._skillState);
         }

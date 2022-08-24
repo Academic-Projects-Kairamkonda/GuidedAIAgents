@@ -8,6 +8,8 @@ public class AgentClass : MonoBehaviour
 
     public Transform target;
 
+
+    /*
     void OnCollisionEnter(Collision collision)
     {
         GameObject other = collision.gameObject;
@@ -20,6 +22,7 @@ public class AgentClass : MonoBehaviour
             other.transform.GetComponent<Unit>().IntitatePath(target);
         }
     }
+    */
 }
 
 [System.Serializable]

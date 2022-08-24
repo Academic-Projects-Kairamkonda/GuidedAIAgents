@@ -10,6 +10,7 @@ public class SkillState : BaseState
         unitState = "Skill State";
 
         commandRequestManager._rank++;
+        commandRequestManager.timeIncreaseSpeed = 1f;
 
         commandRequestManager._unit.IntitatePath(commandRequestManager._unit.target);
     }

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Ranking : MonoBehaviour
 {
+    public string agentName;
+    public int skillLevel;
+    public string SkillState;
+
     // Start is called before the first frame update
     void Start()
     {
