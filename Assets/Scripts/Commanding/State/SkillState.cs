@@ -11,7 +11,7 @@ public class SkillState : BaseState
         commandRequestManager._rank++;
         commandRequestManager.timeIncreaseSpeed = 1f;
         commandRequestManager._unit.target=commandRequestManager._targetRequestManager._checkPoints[Random.Range(0, 2)];
-        commandRequestManager._unit.IntitatePath(commandRequestManager._unit.target);
+       commandRequestManager._unit.IntitatePath(commandRequestManager._unit.target);
     }
 
 

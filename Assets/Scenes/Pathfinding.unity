@@ -2125,7 +2125,7 @@ Transform:
   m_GameObject: {fileID: 1704114879}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 42, y: 40, z: 37}
+  m_LocalScale: {x: 42, y: 42, z: 42}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1711258901}
@@ -2182,8 +2182,8 @@ MonoBehaviour:
   unwalkableMask:
     serializedVersion: 2
     m_Bits: 256
-  gridWorldSize: {x: 419.9, y: 367.4}
-  nodeRadius: 0.5
+  gridWorldCoordinateSize: {x: 420, y: 420}
+  radiusOfNode: 0.5
   walkablerRegions:
   - terrainMask:
       serializedVersion: 2
