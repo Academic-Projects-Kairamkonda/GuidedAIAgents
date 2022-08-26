@@ -2,74 +2,73 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+/// <summary>
+/// Base class for a agent to move on walkable regions
+/// </summary>
 public class Unit : MonoBehaviour
 {
     /// <summary>
-    /// 
+    /// minimum path update time 
     /// </summary>
     const float minPathUpdateTime = .2f;
 
     /// <summary>
-    /// 
+    /// move threshold when the path is updated
     /// </summary>
     const float pathUpdateMoveThreshold = .5f;
 
     /// <summary>
-    /// 
+    ///  vector position on the map
     /// </summary>
     public Transform target;
 
     /// <summary>
-    /// 
+    ///  move speed of agent with relative to delta time
     /// </summary>
     public float speed = 20;
 
     /// <summary>
-    /// 
+    /// maximum turning distance
     /// </summary>
     public float turnDst = 5;
 
     /// <summary>
-    /// 
+    /// turnspeed of a agent
     /// </summary>
     public float turnSpeed = 3;
 
     /// <summary>
-    /// 
+    /// Distance between last point and target
     /// </summary>
     public float stoppingDst = 10;
 
     /// <summary>
-    /// 
+    /// it is a reference of a path class
     /// </summary>
-    Path path;
-
+   GeneratePath path;
 
     #region Unity Methods
 
-    void Awake()
-    {
-        
-    }
+    void Awake() { }
 
     void Start()
     {
-        //StartCoroutine(UpdatePath());
+        /* Commented because I want to trigger a movement at a certain point     
+            StartCoroutine(UpdatePath()); */
     }
 
     #endregion Unity Methods
 
     /// <summary>
-    /// 
+    /// Method to trigger the path and update it
     /// </summary>
-    /// <param name="newPath"></param>
-    /// <param name="pathSuccessful"></param>
+    /// <param name="newPath">target location</param>
+    /// <param name="pathSuccessful">boolean to check and generate new path</param>
     public void OnPathFound(Vector3[] waypoints, bool pathSuccessful)
     {
         if (pathSuccessful)
         {
-            path = new Path(waypoints,transform.position,turnDst,stoppingDst);
+            path = new GeneratePath(waypoints,transform.position,turnDst,stoppingDst);
 
             StopCoroutine(FollowPath());
             StartCoroutine(FollowPath());
@@ -84,6 +83,9 @@ public class Unit : MonoBehaviour
         PathRequestManager.RequestPath(new PathRequest(transform.position, _target.position, OnPathFound));
     }
 
+    /// <summary>
+    /// Stops following path
+    /// </summary>
     public void StopPath()
     {
         StopCoroutine(FollowPath());
@@ -92,7 +94,7 @@ public class Unit : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Update the Path when it is followed
     /// </summary>
     /// <returns></returns>
     IEnumerator UpdatePath()
@@ -120,23 +122,23 @@ public class Unit : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Follow towards target location
     /// </summary>
-    /// <returns></returns>
+    /// <returns> null </returns>
     IEnumerator FollowPath()
     {
         bool followingPath = true;
         int pathIndex = 0;
-        transform.LookAt(path.lookpoints[0]);
+        transform.LookAt(path.lookAtpoints[0]);
 
         float speedPercent = 1;
         
         while (followingPath)
         {
             Vector2 pos2D = new Vector2(transform.position.x, transform.position.z);
-            while(path.turnBoundaries[pathIndex].HasCrossedLine(pos2D))
+            while(path.turnedInBoundaries[pathIndex].HasCrossedLine(pos2D))
             {
-                if (pathIndex==path.finishLineIndex)
+                if (pathIndex==path.LineFinishedIndex)
                 {
                     followingPath = false;
                     break;
@@ -149,15 +151,15 @@ public class Unit : MonoBehaviour
 
             if (followingPath)
             {
-                if (pathIndex >= path.slowDownIndex && stoppingDst > 0)
+                if (pathIndex >= path.slowedDownCurrentIndex && stoppingDst > 0)
                 { 
-                    speedPercent = Mathf.Clamp01(path.turnBoundaries[path.finishLineIndex].DistanceFromPoint(pos2D) / stoppingDst);
+                    speedPercent = Mathf.Clamp01(path.turnedInBoundaries[path.LineFinishedIndex].DistanceFromPoint(pos2D) / stoppingDst);
                     if (speedPercent<0.01f)
                     {
                         followingPath = false;
                     }
                 }
-                Quaternion targetRotation = Quaternion.LookRotation(path.lookpoints[pathIndex] - transform.position);
+                Quaternion targetRotation = Quaternion.LookRotation(path.lookAtpoints[pathIndex] - transform.position);
                 transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
                 transform.Translate(Vector3.forward * Time.deltaTime * speed* speedPercent, Space.Self);
 
@@ -168,7 +170,7 @@ public class Unit : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Draws path with help of unity gizmos
     /// </summary>
     public void OnDrawGizmos()
     {

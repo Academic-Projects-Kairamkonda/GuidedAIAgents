@@ -2,60 +2,60 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Path
+public class GeneratePath
 {
     /// <summary>
     /// 
     /// </summary>
-    public readonly Vector3[] lookpoints;
+    public readonly Vector3[] lookAtpoints;
 
     /// <summary>
     /// 
     /// </summary>
-    public readonly Line[] turnBoundaries;
+    public readonly Line[] turnedInBoundaries;
 
     /// <summary>
     /// 
     /// </summary>
-    public readonly int finishLineIndex;
+    public readonly int LineFinishedIndex;
 
     /// <summary>
     /// 
     /// </summary>
-    public readonly int slowDownIndex;
+    public readonly int slowedDownCurrentIndex;
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="waypoints"></param>
-    /// <param name="startPos"></param>
-    /// <param name="turnDst"></param>
-    /// <param name="stoppingDst"></param>
-    public Path(Vector3[] waypoints, Vector3 startPos, float turnDst, float stoppingDst )
+    /// <param name="wayCoordinatepoints"></param>
+    /// <param name="intialPosition"></param>
+    /// <param name="turningDistance"></param>
+    /// <param name="stopDistance"></param>
+    public GeneratePath(Vector3[] wayCoordinatepoints, Vector3 intialPosition, float turningDistance, float stopDistance )
     {
-        lookpoints = waypoints;
-        turnBoundaries = new Line[lookpoints.Length];
-        finishLineIndex = turnBoundaries.Length - 1;
+        lookAtpoints = wayCoordinatepoints;
+        turnedInBoundaries = new Line[lookAtpoints.Length];
+        LineFinishedIndex = turnedInBoundaries.Length - 1;
 
-        Vector2 previousPoint = V3ToV2(startPos);
+        Vector2 lastPositionPoint = V3ToV2(intialPosition);
 
-        for (int i = 0; i < lookpoints.Length; i++)
+        for (int i = 0; i < lookAtpoints.Length; i++)
         {
-            Vector2 currentPoint = V3ToV2(lookpoints[i]);
-            Vector2 dirToCurrentPoint = (currentPoint - previousPoint).normalized;
-            Vector2 turnBoundaryPoint = (i==finishLineIndex)?currentPoint:currentPoint - dirToCurrentPoint*turnDst;
-            turnBoundaries[i] = new Line(turnBoundaryPoint, previousPoint-dirToCurrentPoint*turnDst);
-            previousPoint= turnBoundaryPoint;
+            Vector2 currentCoordinatePoints = V3ToV2(lookAtpoints[i]);
+            Vector2 directionToPresentPoints = (currentCoordinatePoints - lastPositionPoint).normalized;
+            Vector2 turnedBoundariesPoints = (i==LineFinishedIndex)?currentCoordinatePoints:currentCoordinatePoints - directionToPresentPoints*turningDistance;
+            turnedInBoundaries[i] = new Line(turnedBoundariesPoints, lastPositionPoint-directionToPresentPoints*turningDistance);
+            lastPositionPoint= turnedBoundariesPoints;
         }
 
-        float dstFromEndPoint = 0;
+        float distanceFromLastPoint = 0;
 
-        for (int i = lookpoints.Length-1; i >0; i--)
+        for (int i = lookAtpoints.Length-1; i >0; i--)
         {
-            dstFromEndPoint += Vector3.Distance(lookpoints[i], lookpoints[i - 1]);
-            if (dstFromEndPoint > stoppingDst)
+            distanceFromLastPoint += Vector3.Distance(lookAtpoints[i], lookAtpoints[i - 1]);
+            if (distanceFromLastPoint > stopDistance)
             {
-                slowDownIndex = i;
+                slowedDownCurrentIndex = i;
                 break;
             }
         }
@@ -80,14 +80,14 @@ public class Path
     {
         Gizmos.color = Color.black;
 
-        foreach (Vector3 p in lookpoints)
+        foreach (Vector3 p in lookAtpoints)
         {
             Gizmos.DrawCube(p + Vector3.up, Vector3.one);
         }
 
         Gizmos.color = Color.white;
 
-        foreach (Line l in turnBoundaries)
+        foreach (Line l in turnedInBoundaries)
         {
             l.DrawWithGizmos(10);
         }
