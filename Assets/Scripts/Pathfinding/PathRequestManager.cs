@@ -6,7 +6,9 @@ using System.Threading;
 
 public class PathRequestManager : MonoBehaviour
 {
-
+    /// <summary>
+    /// 
+    /// </summary>
     Queue<PathResult> results = new Queue<PathResult>();
 
     /// <summary>
@@ -18,8 +20,6 @@ public class PathRequestManager : MonoBehaviour
     /// 
     /// </summary>
     static PathRequestManager instance;
-
-   
 
     #region Unity Methods
 
