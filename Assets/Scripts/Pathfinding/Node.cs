@@ -10,22 +10,22 @@ public class Node: IHeapItem<Node>
     /// <summary>
     /// Walkable area
     /// </summary>
-    public bool walkable;
+    public bool walkableRegion;
 
     /// <summary>
     /// Position of nodes
     /// </summary>
-    public Vector3 worldPosition;
+    public Vector3 worldLocation;
 
     /// <summary>
     /// position of gridX
     /// </summary>
-    public int gridX;
+    public int gridofX;
 
     /// <summary>
     /// position of gridY
     /// </summary>
-    public int gridY;
+    public int gridofY;
 
     /// <summary>
     /// 
@@ -55,15 +55,15 @@ public class Node: IHeapItem<Node>
     /// <summary>
     /// constructor of the class
     /// </summary>
-    /// <param name="_walkable">Walkable area</param>
-    /// <param name="_worldPos"> world co ordinates</param>
-    public Node(bool _walkable, Vector3 _worldPos, int _gridX, int _gridY, int _penalty)
+    /// <param name="_walkableRegion">Walkable area</param>
+    /// <param name="_worldLocation"> world co ordinates</param>
+    public Node(bool _walkableRegion, Vector3 _worldLocation, int _gridofX, int _gridofY, int _defaultpenalty)
     {
-        walkable = _walkable;
-        worldPosition = _worldPos;
-        gridX = _gridX;
-        gridY = _gridY;
-        movementPenalty = _penalty;
+        walkableRegion = _walkableRegion;
+        worldLocation = _worldLocation;
+        gridofX = _gridofX;
+        gridofY = _gridofY;
+        movementPenalty = _defaultpenalty;
     }
 
     /// <summary>
@@ -95,15 +95,15 @@ public class Node: IHeapItem<Node>
     /// <summary>
     /// Compare the nodes from fcost and hcost
     /// </summary>
-    /// <param name="nodeToCompare"></param>
+    /// <param name="compareNode"></param>
     /// <returns></returns>
-    public int CompareTo(Node nodeToCompare)
+    public int CompareTo(Node compareNode)
     {
-        int compare = fCost.CompareTo(nodeToCompare.fCost);
-        if(compare==0)
+        int compareValue = fCost.CompareTo(compareNode.fCost);
+        if(compareValue==0)
         {
-            compare = hCost.CompareTo(nodeToCompare.hCost);
+            compareValue = hCost.CompareTo(compareNode.hCost);
         }
-        return -compare;
+        return -compareValue;
     }
 }

@@ -35,7 +35,7 @@ public class GridPlane : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    public int obstacleProximityPenalty = 10;
+    public int obstaclePenalty = 10;
 
     /// <summary>
     /// 
@@ -114,7 +114,7 @@ public class GridPlane : MonoBehaviour
     {
         newGrid = new Node[gridSizeCoordinateX, gridSizeCoordinateY];
 
-        Vector3 worldCoordinatesBottomLeft = transform.position - Vector3.right * gridWorldCoordinateSize.x / 2 - Vector3.forward * gridWorldCoordinateSize.y / 2;
+        Vector3 worldCoordinatesBottomLeft = (-Vector3.right + transform.position)* gridWorldCoordinateSize.x / 2 - Vector3.forward * gridWorldCoordinateSize.y / 2;
 
         for (int x = 0; x < gridSizeCoordinateX; x++)
         {
@@ -127,31 +127,32 @@ public class GridPlane : MonoBehaviour
 
                 //raycast
 
-                Ray ray = new Ray(worldPointCoordinates + Vector3.up * 50, Vector3.down);
-                RaycastHit hit;
+                Ray rayPoint = new Ray(Vector3.up * 50+worldPointCoordinates ,  Vector3.down);
+                RaycastHit raycastHit;
 
-                if (Physics.Raycast(ray,out hit, 100, walkableRegionMask))
+                float maxDistance = 100;
+                if (Physics.Raycast(rayPoint,out raycastHit, maxDistance, walkableRegionMask))
                 {
-                    walkableRegionDictionary.TryGetValue(hit.collider.gameObject.layer, out movementTerrainPenalty);
+                    walkableRegionDictionary.TryGetValue(raycastHit.collider.gameObject.layer, out movementTerrainPenalty);
                 }
-
 
                 if (!canWalkable)
                 {
-                    movementTerrainPenalty += obstacleProximityPenalty;
+                    movementTerrainPenalty += obstaclePenalty;
                 }
+
                 newGrid[x, y] = new Node(canWalkable, worldPointCoordinates,x,y,movementTerrainPenalty);
             }
         }
 
-        BlurPenaltyMap(3);
+        BlurMapPenalty(4);
     }
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="blurSize"></param>
-    void BlurPenaltyMap(int blurSize)
+    void BlurMapPenalty(int blurSize)
     {
         int kernelSize = blurSize * 2 + 1;
         int kernelExtents = (kernelSize - 1) / 2;
@@ -227,8 +228,8 @@ public class GridPlane : MonoBehaviour
                 {
                     continue;
                 }
-                int checkX = node.gridX + x;
-                int checkY = node.gridY + y;
+                int checkX = node.gridofX + x;
+                int checkY = node.gridofY + y;
                 if (checkX>=0 && checkX<gridSizeCoordinateX && checkY>=0 && checkY<gridSizeCoordinateY)
                 {
                     neighbours.Add(newGrid[checkX, checkY]);
@@ -244,7 +245,7 @@ public class GridPlane : MonoBehaviour
     /// </summary>
     /// <param name="worldPosition">target position</param>
     /// <returns>grid node of x and y</returns>
-    public Node NodeFromWorldPoint(Vector3 worldPosition)
+    public Node NodeFromWorldLocation(Vector3 worldPosition)
     {
         float percentX = (worldPosition.x + gridWorldCoordinateSize.x / 2) / gridWorldCoordinateSize.x;
         float percentY = (worldPosition.z + gridWorldCoordinateSize.y / 2) / gridWorldCoordinateSize.y;
@@ -270,8 +271,8 @@ public class GridPlane : MonoBehaviour
                 foreach (Node n in newGrid)
                 {
                     Gizmos.color = Color.Lerp(Color.white, Color.black,Mathf.InverseLerp(penaltyMin,penaltyMax,n.movementPenalty));
-                    Gizmos.color = (n.walkable) ? Gizmos.color: Color.red;
-                    Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeLength));
+                    Gizmos.color = (n.walkableRegion) ? Gizmos.color: Color.red;
+                    Gizmos.DrawCube(n.worldLocation, Vector3.one * (nodeLength));
                 }
 			}
     }

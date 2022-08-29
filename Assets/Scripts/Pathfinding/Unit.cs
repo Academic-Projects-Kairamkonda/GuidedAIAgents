@@ -80,7 +80,7 @@ public class Unit : MonoBehaviour
     /// </summary>
     public void IntitatePath(Transform _target)
     {
-        PathRequestManager.RequestPath(new PathRequest(transform.position, _target.position, OnPathFound));
+        PathRequestManager.EntityRequest(new EntityRequestPath(transform.position, _target.position, OnPathFound));
     }
 
     /// <summary>
@@ -104,7 +104,7 @@ public class Unit : MonoBehaviour
             yield return new WaitForSeconds(.3f);
         }
 
-        PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
+        PathRequestManager.EntityRequest(new EntityRequestPath(transform.position, target.position, OnPathFound));
 
         float sqrMoveThresshold = pathUpdateMoveThreshold * pathUpdateMoveThreshold;
         Vector3 targetPosOld = target.position;
@@ -115,7 +115,7 @@ public class Unit : MonoBehaviour
                  
             if ((target.position-targetPosOld).sqrMagnitude>sqrMoveThresshold)
             {
-                PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
+                PathRequestManager.EntityRequest(new EntityRequestPath(transform.position, target.position, OnPathFound));
                 targetPosOld = target.position;
             }
         }

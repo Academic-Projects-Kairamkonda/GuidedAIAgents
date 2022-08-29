@@ -54,17 +54,15 @@ public class PathRequestManager : MonoBehaviour
     /// <param name="pathStart"></param>
     /// <param name="pathEnd"></param>
     /// <param name="callback"></param>
-    public static void RequestPath(PathRequest request)
+    public static void EntityRequest(EntityRequestPath request)
     {
-        ThreadStart threadStart= delegate
+        ThreadStart newThreadStart= delegate
         {
-            instance.pathFinding.FindPath(request, instance.FinishedProcessingPath);
-
+            instance.pathFinding.GenerateFindPath(request, instance.FinishedProcessingPath);
 	    };
 
-        threadStart.Invoke();
+        newThreadStart.Invoke();
     }
-
 
     /// <summary>
     /// 
@@ -102,16 +100,16 @@ public struct PathResult
 /// <summary>
 /// 
 /// </summary>
-public struct PathRequest
+public struct EntityRequestPath
 {
-    public Vector3 pathStart;
-    public Vector3 pathEnd;
+    public Vector3 initialPath;
+    public Vector3 finalPath;
     public Action<Vector3[], bool> callback;
 
-    public PathRequest( Vector3 _start, Vector3 _end, Action<Vector3[], bool> _callback)
+    public EntityRequestPath( Vector3 _start, Vector3 _end, Action<Vector3[], bool> _callback)
     {
-        pathStart = _start;
-        pathEnd = _end;
+        initialPath = _start;
+        finalPath = _end;
         callback = _callback;
     }
 }
