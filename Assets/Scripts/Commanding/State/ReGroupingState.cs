@@ -2,20 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class SkillState : BaseState
+public class ReGroupingState : BaseState
 {
+    private float currrentlifeTime;
+
+    private const float speedIncrement = 0.5f;
 
     public override void EnterState(CommandRequestManager manager)
     {
-        unitState = "Skill State";
-
-        manager._rank++;
-        manager.timeIncreaseSpeed = 1f;
-
+        unitState = "Re Grouping State";
+        manager.timeIncreaseSpeed = speedIncrement;
+        currrentlifeTime += manager._unitLifeTime;
+        currrentlifeTime += 2;
         manager.GetUnit.StartPath();
     }
-
 
     public override void UpdateState(CommandRequestManager manager)
     {
@@ -23,13 +23,11 @@ public class SkillState : BaseState
 
         foreach (var hitCollider in hitColliders)
         {
-            if(hitCollider.transform.GetComponent<GuideAnotherTarget>())
+            if (hitCollider.transform.GetComponent<GuideAnotherTarget>())
             {
                 manager.GetUnit.StopPath();
-                manager.GetUnit.target = manager.parentTransform;
-
-                manager.SwitchState(manager._rerouteState);
             }
         }
     }
+
 }

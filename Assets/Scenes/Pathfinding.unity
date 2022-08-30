@@ -806,11 +806,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
+  near clip plane: -70.9
+  far clip plane: 1009.2
   field of view: 60
   orthographic: 1
-  orthographic size: 54.1
+  orthographic size: 102.2
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -834,7 +834,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 954651942}
   m_LocalRotation: {x: 0.23911765, y: 0.36964378, z: -0.09904577, w: 0.8923991}
-  m_LocalPosition: {x: -65.8, y: 53.8, z: -71.6}
+  m_LocalPosition: {x: -65.8, y: 54.8, z: -71.6}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1175,27 +1175,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6b1f29c42e2b24635ab300231105e524, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.6566528
+      value: 2.1398985
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6b1f29c42e2b24635ab300231105e524, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.6566528
+      value: 2.1398985
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6b1f29c42e2b24635ab300231105e524, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.6566528
+      value: 2.1398985
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6b1f29c42e2b24635ab300231105e524, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.696
+      value: -3.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6b1f29c42e2b24635ab300231105e524, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.10165
+      value: -0.17646
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6b1f29c42e2b24635ab300231105e524, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.7171
+      value: -16.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6b1f29c42e2b24635ab300231105e524, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1757,8 +1757,8 @@ Transform:
   m_GameObject: {fileID: 1704114879}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 42, y: 42, z: 42}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 65, y: 65, z: 65}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1711258901}
   m_RootOrder: 0
@@ -1814,7 +1814,7 @@ MonoBehaviour:
   unwalkableMask:
     serializedVersion: 2
     m_Bits: 256
-  gridWorldCoordinateSize: {x: 420, y: 420}
+  gridWorldCoordinateSize: {x: 500, y: 500}
   radiusOfNode: 0.5
   walkablerRegions:
   - terrainMask:
@@ -3248,7 +3248,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3090241123757638027}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -58.1, y: 4.5, z: -70.8}
+  m_LocalPosition: {x: -40.6, y: 4.5, z: -58.2}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 1
   m_Children:

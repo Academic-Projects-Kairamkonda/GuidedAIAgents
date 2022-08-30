@@ -13,21 +13,15 @@ public class RerouteState : BaseState
         unitState = "Re routing State";
         manager.timeIncreaseSpeed = speedIncrement;
         currrentlifeTime += manager._unitLifeTime;
-        currrentlifeTime += 2;
-        manager.GetUnit.StartPath();
+        currrentlifeTime += 4;
     }
 
     
     public override void UpdateState(CommandRequestManager manager)
     {
-        Collider[] hitColliders = Physics.OverlapSphere(manager.transform.position, 3f);
-
-        foreach (var hitCollider in hitColliders)
+        if (manager._unitLifeTime>currrentlifeTime)
         {
-            if (hitCollider.transform.GetComponent<GuideAnotherTarget>())
-            {
-                manager.GetUnit.StopPath();
-            }
+            manager.SwitchState(manager._reGroupingState);
         }
     }
 }

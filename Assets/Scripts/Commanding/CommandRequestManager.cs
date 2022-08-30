@@ -7,6 +7,7 @@ public class CommandRequestManager : MonoBehaviour
     public IdleState _idleState = new IdleState();
     public SkillState _skillState = new SkillState();
     public RerouteState _rerouteState = new RerouteState();
+    public ReGroupingState _reGroupingState = new ReGroupingState();
 
     /// <summary>
     /// 
