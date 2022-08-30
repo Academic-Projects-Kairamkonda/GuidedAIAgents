@@ -30,10 +30,13 @@ public class CommandRequestManager : MonoBehaviour
 
     public Unit GetUnit;
 
+    public Transform parentTransform;
+
 
     void Awake()
     {
         GetUnit = this.GetComponent<Unit>();
+        parentTransform = this.transform.parent.GetComponent<TargetRequestManager>()._checkPoints[0];
     }
 
     void Start()
@@ -53,6 +56,16 @@ public class CommandRequestManager : MonoBehaviour
     {
         currentState = state;
         currentState.EnterState(this);
+    }
+
+    public bool TimerLogic(float maxTime, float currentTime)
+    {
+        if(maxTime>currentTime)
+        {
+            return true;
+        }
+
+        return false;
     }
 
 }

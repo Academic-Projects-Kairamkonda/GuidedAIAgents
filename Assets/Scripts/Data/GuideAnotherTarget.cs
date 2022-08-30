@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class GuideAnotherTarget : MonoBehaviour
 {
-    public Transform[] checkpoints;
+    //public Transform[] checkpoints;
 }

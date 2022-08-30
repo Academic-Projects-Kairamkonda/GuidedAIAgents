@@ -25,7 +25,7 @@ public class Unit : MonoBehaviour
     /// <summary>
     ///  move speed of agent with relative to delta time
     /// </summary>
-    public float speed = 20;
+    public const float speed = 20;
 
     /// <summary>
     /// maximum turning distance
@@ -83,19 +83,18 @@ public class Unit : MonoBehaviour
         PathRequestManager.EntityRequest(new EntityRequestPath(transform.position, _target.position, OnPathFound));
     }
 
-    public void StartMovement()
-    {
-        StartCoroutine(FollowPath());
-    }
-
     /// <summary>
     /// Stops following path
     /// </summary>
-    public void StopMovement()
+    public void StopPath()
     {
-        StopCoroutine(FollowPath());
+        StopAllCoroutines();
+    }
 
-        Debug.Log("Function called");
+    public void StartPath()
+    {
+        StartCoroutine(UpdatePath());
+        Debug.Log("Start Path Called");
     }
 
     /// <summary>

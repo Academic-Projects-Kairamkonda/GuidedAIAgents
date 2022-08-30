@@ -2,33 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 
-/// </summary>
 public class RerouteState : BaseState
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    private float holdonTime = 3;
+    private float currrentlifeTime;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="manager"></param>
+    private const float speedIncrement = 0.5f;
+
     public override void EnterState(CommandRequestManager manager)
     {
-        Debug.Log("Entered into a reoute state");
-
-        manager.GetUnit.StopMovement();
+        unitState = "Re routing State";
+        manager.timeIncreaseSpeed = speedIncrement;
+        currrentlifeTime += manager._unitLifeTime;
+        currrentlifeTime += 2;
+        manager.GetUnit.StartPath();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="manager"></param>
+    
     public override void UpdateState(CommandRequestManager manager)
     {
-        
+        Collider[] hitColliders = Physics.OverlapSphere(manager.transform.position, 3f);
+
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.transform.GetComponent<GuideAnotherTarget>())
+            {
+                manager.GetUnit.StopPath();
+            }
+        }
     }
 }
