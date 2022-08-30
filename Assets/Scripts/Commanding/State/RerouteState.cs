@@ -4,24 +4,22 @@ using UnityEngine;
 
 public class RerouteState : BaseState
 {
-    private float currrentlifeTime;
-
+    private float currentTime;
+    private const float waitTime = 4;
     private const float speedIncrement = 0.5f;
 
     public override void EnterState(CommandRequestManager manager)
     {
         unitState = "Re routing State";
+        manager.GetUnit.target = manager.parentTransform;
         manager.timeIncreaseSpeed = speedIncrement;
-        currrentlifeTime += manager._unitLifeTime;
-        currrentlifeTime += 4;
+        currentTime = manager._unitLifeTime+waitTime;
     }
 
     
     public override void UpdateState(CommandRequestManager manager)
     {
-        if (manager._unitLifeTime>currrentlifeTime)
-        {
+        if (manager._unitLifeTime>currentTime)
             manager.SwitchState(manager._reGroupingState);
-        }
     }
 }

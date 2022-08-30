@@ -22,6 +22,8 @@ public class Unit : MonoBehaviour
     /// </summary>
     public Transform target;
 
+    public Transform firstTarget;
+
     /// <summary>
     ///  move speed of agent with relative to delta time
     /// </summary>
@@ -49,7 +51,10 @@ public class Unit : MonoBehaviour
 
     #region Unity Methods
 
-    void Awake() { }
+    void Awake()
+    {
+        target = firstTarget;
+    }
 
     void Start()
     {

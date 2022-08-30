@@ -11,9 +11,6 @@ public class ReGroupingState : BaseState
     public override void EnterState(CommandRequestManager manager)
     {
         unitState = "Re Grouping State";
-        manager.timeIncreaseSpeed = speedIncrement;
-        currrentlifeTime += manager._unitLifeTime;
-        currrentlifeTime += 2;
         manager.GetUnit.StartPath();
     }
 
@@ -26,6 +23,7 @@ public class ReGroupingState : BaseState
             if (hitCollider.transform.GetComponent<GuideAnotherTarget>())
             {
                 manager.GetUnit.StopPath();
+                manager.SwitchState(manager._idleState);
             }
         }
     }

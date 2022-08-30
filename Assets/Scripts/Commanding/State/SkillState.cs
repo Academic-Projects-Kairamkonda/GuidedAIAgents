@@ -5,17 +5,13 @@ using UnityEngine;
 
 public class SkillState : BaseState
 {
-
     public override void EnterState(CommandRequestManager manager)
     {
         unitState = "Skill State";
-
         manager._rank++;
         manager.timeIncreaseSpeed = 1f;
-
         manager.GetUnit.StartPath();
     }
-
 
     public override void UpdateState(CommandRequestManager manager)
     {
@@ -26,8 +22,6 @@ public class SkillState : BaseState
             if(hitCollider.transform.GetComponent<GuideAnotherTarget>())
             {
                 manager.GetUnit.StopPath();
-                manager.GetUnit.target = manager.parentTransform;
-
                 manager.SwitchState(manager._rerouteState);
             }
         }
