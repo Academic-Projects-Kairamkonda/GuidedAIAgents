@@ -83,10 +83,15 @@ public class Unit : MonoBehaviour
         PathRequestManager.EntityRequest(new EntityRequestPath(transform.position, _target.position, OnPathFound));
     }
 
+    public void StartMovement()
+    {
+        StartCoroutine(FollowPath());
+    }
+
     /// <summary>
     /// Stops following path
     /// </summary>
-    public void StopPath()
+    public void StopMovement()
     {
         StopCoroutine(FollowPath());
 

@@ -15,13 +15,13 @@ public abstract class BaseState
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="commandRequestManager"></param>
-    public abstract void EnterState(CommandRequestManager commandRequestManager);
+    /// <param name="manager"></param>
+    public abstract void EnterState(CommandRequestManager manager);
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="commandRequestManager"></param>
-    public abstract void UpdateState(CommandRequestManager commandRequestManager);
+    /// <param name="manager"></param>
+    public abstract void UpdateState(CommandRequestManager manager);
 
 }

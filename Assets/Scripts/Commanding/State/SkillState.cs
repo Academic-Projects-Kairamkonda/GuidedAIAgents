@@ -11,30 +11,30 @@ public class SkillState : BaseState
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="commandRequestManager"></param>
-    public override void EnterState(CommandRequestManager commandRequestManager)
+    /// <param name="manager"></param>
+    public override void EnterState(CommandRequestManager manager)
     {
         unitState = "Skill State";
 
-        commandRequestManager._rank++;
-        commandRequestManager.timeIncreaseSpeed = 1f;
-        commandRequestManager._unit.target=commandRequestManager._targetRequestManager._checkPoints[0];
-       commandRequestManager._unit.IntitatePath(commandRequestManager._unit.target);
+        manager._rank++;
+        manager.timeIncreaseSpeed = 1f;
+
+        manager.GetUnit.StartMovement();
     }
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="commandRequestManager"></param>
-    public override void UpdateState(CommandRequestManager commandRequestManager)
+    /// <param name="manager"></param>
+    public override void UpdateState(CommandRequestManager manager)
     {
-        Collider[] hitColliders = Physics.OverlapSphere(commandRequestManager.transform.position, 3f);
+        Collider[] hitColliders = Physics.OverlapSphere(manager.transform.position, 3f);
+
         foreach (var hitCollider in hitColliders)
         {
             if(hitCollider.transform.GetComponent<GuideAnotherTarget>())
             {
-                commandRequestManager._unit.StopPath();
-                commandRequestManager.SwitchState(commandRequestManager._rerouteState);
+                manager.SwitchState(manager._rerouteState);
             }
         }
     }

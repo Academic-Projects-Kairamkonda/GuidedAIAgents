@@ -7,18 +7,18 @@ public class IdleState : BaseState
 {
     private const int idleStateTime=2;
 
-    public override void EnterState(CommandRequestManager commandRequestManager)
+    public override void EnterState(CommandRequestManager manager)
     {
         unitState = "Idle State";
 
-        commandRequestManager.timeIncreaseSpeed = 1f;
+        manager.timeIncreaseSpeed = 1f;
     }
 
-    public override void UpdateState(CommandRequestManager commandRequestManager)
+    public override void UpdateState(CommandRequestManager manager)
     {
-        if (commandRequestManager._unitLifeTime>idleStateTime)
+        if (manager._unitLifeTime>idleStateTime)
         {
-            commandRequestManager.SwitchState(commandRequestManager._skillState);
+            manager.SwitchState(manager._skillState);
         }
 
     }

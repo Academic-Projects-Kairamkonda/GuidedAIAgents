@@ -16,26 +16,6 @@ public class CommandRequestManager : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    public TextMesh _agentLevel;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public TextMesh _agentState;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public TextMesh _agentLifeTime;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public Unit _unit;
-
-    /// <summary>
-    /// 
-    /// </summary>
     public int _rank=1;
 
     /// <summary>
@@ -48,21 +28,12 @@ public class CommandRequestManager : MonoBehaviour
     /// </summary>
     public float timeIncreaseSpeed=1;
 
-    private Ranking GetRanking;
-
-    public TargetRequestManager _targetRequestManager;
+    public Unit GetUnit;
 
 
     void Awake()
     {
-        _unit = this.GetComponent<Unit>();
-        _targetRequestManager = this.GetComponentInParent<TargetRequestManager>();
-
-        GetRanking = this.transform.GetComponent<Ranking>();
-
-        _agentLevel = this.transform.Find("Agent Stats/Agent Level").GetComponent<TextMesh>();
-        _agentState = this.transform.Find("Agent Stats/State").GetComponent<TextMesh>();
-        _agentLifeTime= this.transform.Find("Agent Stats/Lifetime").GetComponent<TextMesh>();
+        GetUnit = this.GetComponent<Unit>();
     }
 
     void Start()
@@ -74,7 +45,6 @@ public class CommandRequestManager : MonoBehaviour
     void Update()
     {
         currentState.UpdateState(this);
-        UnitTextUpdate();
 
         _unitLifeTime += timeIncreaseSpeed * Time.deltaTime;
     }
@@ -83,13 +53,6 @@ public class CommandRequestManager : MonoBehaviour
     {
         currentState = state;
         currentState.EnterState(this);
-    }
-
-    private void UnitTextUpdate()
-    {
-        _agentLevel.text = $"Agent Level {_rank}";
-        _agentState.text= currentState.unitState;
-        _agentLifeTime.text = $"Life time: {Mathf.RoundToInt(_unitLifeTime).ToString()}";
     }
 
 }

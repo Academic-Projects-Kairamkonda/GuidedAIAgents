@@ -15,37 +15,20 @@ public class RerouteState : BaseState
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="commandRequestManager"></param>
-    public override void EnterState(CommandRequestManager commandRequestManager)
+    /// <param name="manager"></param>
+    public override void EnterState(CommandRequestManager manager)
     {
         Debug.Log("Entered into a reoute state");
 
-        commandRequestManager._unit.target = commandRequestManager._targetRequestManager._checkPoints[1];
-        commandRequestManager._unit.IntitatePath(commandRequestManager._unit.target);
-
+        manager.GetUnit.StopMovement();
     }
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="commandRequestManager"></param>
-    public override void UpdateState(CommandRequestManager commandRequestManager)
+    /// <param name="manager"></param>
+    public override void UpdateState(CommandRequestManager manager)
     {
-        if (holdonTime < 1 * Time.deltaTime)
-        {
-            Collider[] hitColliders = Physics.OverlapSphere(commandRequestManager.transform.position, 3f);
-            foreach (var hitCollider in hitColliders)
-            {
-                if (hitCollider.transform.GetComponent<GuideAnotherTarget>())
-                {
-                    Debug.Log("Found target");
-
-                    /*
-                    commandRequestManager._unit.target = hitCollider.transform.GetComponent<GuideAnotherTarget>().checkpoints[0];
-                    commandRequestManager._unit.IntitatePath(commandRequestManager._unit.target);
-                    */
-                }
-            }
-        }
+        
     }
 }
