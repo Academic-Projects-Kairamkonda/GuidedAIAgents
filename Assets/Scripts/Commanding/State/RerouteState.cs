@@ -5,13 +5,12 @@ using UnityEngine;
 public class RerouteState : BaseState
 {
     private float currentTime;
-    private const float waitTime = 4;
+    private const float waitTime = 10;
     private const float speedIncrement = 0.5f;
 
     public override void EnterState(CommandRequestManager manager)
     {
         unitState = "Re routing State";
-        manager.GetUnit.target = manager.parentTransform;
         manager.timeIncreaseSpeed = speedIncrement;
         currentTime = manager._unitLifeTime+waitTime;
     }
@@ -19,7 +18,11 @@ public class RerouteState : BaseState
     
     public override void UpdateState(CommandRequestManager manager)
     {
-        if (manager._unitLifeTime>currentTime)
-            manager.SwitchState(manager._reGroupingState);
+        if (manager._unitLifeTime > currentTime)
+        {
+            manager.parentTransform.GetComponent<AITraining>().AISwitchState(
+                manager.parentTransform.GetComponent<AITraining>().aIReGroupState);
+        }
+        
     }
 }

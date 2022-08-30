@@ -5,25 +5,34 @@ using UnityEngine;
 public class AITraining : MonoBehaviour
 {
     public GameObject[] seekers;
-    public bool startTraining;
 
-    CommandRequestManager manager;
+    public AIBaseState aiCurrentState;
 
-    void Awake()
+    public AITargetState aITargetState = new AITargetState();
+
+    public AIReGroupState aIReGroupState = new AIReGroupState();
+
+    public AIWaitingState aIWaitingState = new AIWaitingState();
+
+    public float reGroupTime;
+
+    void Start()
     {
-
+        aiCurrentState = aIWaitingState;
+        aiCurrentState.AIEnterState(this);
     }
 
     void Update()
     {
-        
+        aiCurrentState.AIUpdateState(this);
+
+        reGroupTime += 0.2f * Time.deltaTime;
     }
 
-    public void TrainSkillState()
+
+   public  void AISwitchState(AIBaseState aIBaseState)
     {
-        manager = seekers[0].GetComponent<CommandRequestManager>();
-        manager.SwitchState(manager._skillState);
+        aiCurrentState = aIBaseState;
+        aiCurrentState.AIEnterState(this);
     }
-
-
 }

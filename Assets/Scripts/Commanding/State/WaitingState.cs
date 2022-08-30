@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaitingState : MonoBehaviour
+public class WaitingState : BaseState
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void EnterState(CommandRequestManager manager)
     {
-        
+        unitState = "Waiting State";
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void UpdateState(CommandRequestManager manager)
     {
-        
+  
     }
 }

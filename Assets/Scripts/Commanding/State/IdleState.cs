@@ -6,7 +6,7 @@ using UnityEngine;
 public class IdleState : BaseState
 {
     private float currentTime;
-    private const float waitTime = 4;
+    private const float waitTime = 2;
     private const float speedIncrement = 0.5f;
 
     public override void EnterState(CommandRequestManager manager)

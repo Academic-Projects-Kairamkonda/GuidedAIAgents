@@ -10,8 +10,11 @@ public class ReGroupingState : BaseState
 
     public override void EnterState(CommandRequestManager manager)
     {
-        unitState = "Re Grouping State";
+        manager.GetUnit.target = manager.parentTransform;
         manager.GetUnit.StartPath();
+
+        unitState = "Re Grouping State";
+        manager.timeIncreaseSpeed = speedIncrement;
     }
 
     public override void UpdateState(CommandRequestManager manager)
@@ -20,10 +23,10 @@ public class ReGroupingState : BaseState
 
         foreach (var hitCollider in hitColliders)
         {
-            if (hitCollider.transform.GetComponent<GuideAnotherTarget>())
+            if (hitCollider.transform.GetComponent<AITraining>())
             {
                 manager.GetUnit.StopPath();
-                manager.SwitchState(manager._idleState);
+                manager.SwitchState(manager._waitingState);
             }
         }
     }

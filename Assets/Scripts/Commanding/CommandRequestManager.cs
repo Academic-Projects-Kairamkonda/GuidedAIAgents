@@ -8,6 +8,7 @@ public class CommandRequestManager : MonoBehaviour
     public SkillState _skillState = new SkillState();
     public RerouteState _rerouteState = new RerouteState();
     public ReGroupingState _reGroupingState = new ReGroupingState();
+    public WaitingState _waitingState = new WaitingState();
 
     /// <summary>
     /// 
@@ -42,7 +43,7 @@ public class CommandRequestManager : MonoBehaviour
 
     void Start()
     {
-        currentState = _idleState;
+        currentState = _waitingState;
         currentState.EnterState(this);
     }
 
@@ -57,16 +58,6 @@ public class CommandRequestManager : MonoBehaviour
     {
         currentState = state;
         currentState.EnterState(this);
-    }
-
-    public bool TimerLogic(float maxTime, float currentTime)
-    {
-        if(maxTime>currentTime)
-        {
-            return true;
-        }
-
-        return false;
     }
 
 }
