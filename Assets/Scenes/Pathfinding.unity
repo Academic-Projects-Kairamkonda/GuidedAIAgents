@@ -3531,11 +3531,11 @@ GameObject:
   m_Component:
   - component: {fileID: 3090241123757638023}
   - component: {fileID: 3090241123757638030}
+  - component: {fileID: 3090241123757638031}
   - component: {fileID: 3090241123757638029}
   - component: {fileID: 3090241123757638025}
   - component: {fileID: 3090241123757638022}
   - component: {fileID: 3090241123757638028}
-  - component: {fileID: 3090241123757638031}
   m_Layer: 0
   m_Name: Agent 5
   m_TagString: Untagged
@@ -3584,7 +3584,7 @@ MonoBehaviour:
   - {fileID: 1315300889526050291}
   - {fileID: 1727360913}
   - {fileID: 1988143890}
-  startTraining: 0
+  reGroupTime: 0
 --- !u!114 &3090241123757638031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3592,9 +3592,9 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3090241123757638027}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 525c34fbe2d3e46aaa4e9c2b8285070a, type: 3}
+  m_Script: {fileID: 11500000, guid: 1fe539ced64e64d07b1d5a02f457384f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _agentLevel: {fileID: 0}
