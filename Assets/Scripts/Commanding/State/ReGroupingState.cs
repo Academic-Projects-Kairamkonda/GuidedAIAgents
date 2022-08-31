@@ -27,6 +27,7 @@ public class ReGroupingState : BaseState
             {
                 manager.GetUnit.StopPath();
                 manager.SwitchState(manager._waitingState);
+                hitCollider.transform.GetComponent<AITraining>().SwitchWaitingState();
             }
         }
     }

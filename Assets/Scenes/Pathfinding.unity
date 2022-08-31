@@ -491,7 +491,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 509872879}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.5, y: 0.5, z: -5.5}
+  m_LocalPosition: {x: -13.5, y: 0.5, z: -1.5}
   m_LocalScale: {x: 4, y: 1, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3471,7 +3471,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3090241123757638027}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -40.6, y: 4.5, z: -58.2}
+  m_LocalPosition: {x: -39.6, y: 4.5, z: -52.9}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -3536,6 +3536,7 @@ GameObject:
   - component: {fileID: 3090241123757638025}
   - component: {fileID: 3090241123757638022}
   - component: {fileID: 3090241123757638028}
+  - component: {fileID: 3090241123757638032}
   m_Layer: 0
   m_Name: Agent 5
   m_TagString: Untagged
@@ -3564,7 +3565,7 @@ BoxCollider:
   m_GameObject: {fileID: 3090241123757638027}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 5, y: 2, z: 5}
   m_Center: {x: 0, y: 0, z: 0}
@@ -3584,6 +3585,7 @@ MonoBehaviour:
   - {fileID: 1315300889526050291}
   - {fileID: 1727360913}
   - {fileID: 1988143890}
+  timeIncrementSpeed: 0.5
   reGroupTime: 0
 --- !u!114 &3090241123757638031
 MonoBehaviour:
@@ -3600,6 +3602,19 @@ MonoBehaviour:
   _agentLevel: {fileID: 0}
   _agentState: {fileID: 0}
   _agentLifeTime: {fileID: 0}
+--- !u!135 &3090241123757638032
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3090241123757638027}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 6.31
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4125312683051757680
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,11 +8,14 @@ public class AITraining : MonoBehaviour
 
     public AIBaseState aiCurrentState;
 
+    public AIWaitingState aIWaitingState = new AIWaitingState();
+
     public AITargetState aITargetState = new AITargetState();
 
     public AIReGroupState aIReGroupState = new AIReGroupState();
 
-    public AIWaitingState aIWaitingState = new AIWaitingState();
+    public float timeIncrementSpeed = 1;
+
 
     public float reGroupTime;
 
@@ -26,7 +29,7 @@ public class AITraining : MonoBehaviour
     {
         aiCurrentState.AIUpdateState(this);
 
-        reGroupTime += 0.2f * Time.deltaTime;
+        reGroupTime += timeIncrementSpeed * Time.deltaTime;
     }
 
 
@@ -34,5 +37,10 @@ public class AITraining : MonoBehaviour
     {
         aiCurrentState = aIBaseState;
         aiCurrentState.AIEnterState(this);
+    }
+
+    public void SwitchWaitingState()
+    {
+        AISwitchState(aIWaitingState);
     }
 }
