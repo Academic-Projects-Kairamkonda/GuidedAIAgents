@@ -6,7 +6,7 @@ public class AIReGroupState : AIBaseState
 {
     public override void AIEnterState(AITraining aITraining)
     {
-        unitState="Re Grouping State";
+        unitState="Re Grouping";
 
         for (int i = 0; i < aITraining.seekers.Length; i++)
         {

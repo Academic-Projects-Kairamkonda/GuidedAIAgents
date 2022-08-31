@@ -6,7 +6,7 @@ public class AITargetState : AIBaseState
 {
     public override void AIEnterState(AITraining aITraining)
     {
-        unitState = "Target State";
+        unitState = "Add Movement behaviour";
 
         for (int i = 0; i < aITraining.seekers.Length; i++)
         {
