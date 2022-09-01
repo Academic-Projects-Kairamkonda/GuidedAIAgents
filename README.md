@@ -1,2 +1,3 @@
-# AIRankingSystem
-A.I agents behave on command form the officer and act according to it.
+# Guided AI agents
+<h3> Abstract </h3>
+Non-playing characters in most of the games run into obstacles and get stuck forever. Sometimes it be- comes a disturbance to the gameplay experience. The project aims to bring those characters to generate their path by avoiding the obstacles in their path. In addition to that, these characters have some be- haviours such as movement, combat, and instructions in the game world, so they need the training to have new behaviours. The algorithm is implemented by following RTS games’ movements and the logic behind them, and researching the movements of non-playing characters and their behaviours while in- teracting with players. The reasons for applying those methods are that they give bug-free movement for AI agents as well as base-level AI, so their training is not wasted since they are getting trained in the whole game, so they will level up, which adds new behaviours to them.
